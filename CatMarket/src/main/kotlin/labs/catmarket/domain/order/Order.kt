@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class Order(
-    val id: UUID,
+    val id: UUID?,
     val creationTime: LocalDateTime,
     val status: Status = Status.NEW,
     val orderItems: MutableList<OrderItem>
@@ -33,6 +33,4 @@ data class Order(
         if (status == Status.SHIPPED) throw IllegalStateException("Cannot cancel shipped order")
         return copy(status = Status.CANCELED)
     }
-
-    fun getStatus() = status
 }
