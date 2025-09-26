@@ -1,0 +1,158 @@
+openapi: 3.0.1
+info:
+  title: CatMarket API
+  version: 1.0.0
+paths:
+  /api/v1/categories:
+    post:
+      summary: Create a category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDtoRequest'
+      responses:
+        '201':
+          description: Category created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDtoResponse'
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+        '409':
+          description: Conflict (e.g., category already exists)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+    get:
+      summary: Get all categories
+      responses:
+        '200':
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryDtoResponse'
+  /api/v1/categories/{id}:
+    get:
+      summary: Get category by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Category found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDtoResponse'
+        '404':
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+    put:
+      summary: Update category by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDtoRequest'
+      responses:
+        '200':
+          description: Category updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDtoResponse'
+        '404':
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+        '409':
+          description: Update conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+    delete:
+      summary: Delete category by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Category deleted
+        '404':
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+
+components:
+  schemas:
+    CategoryDtoRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    CategoryDtoResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    ErrorDtoResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+          nullable: true
+        path:
+          type: string
+          nullable: true
+        errors:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
