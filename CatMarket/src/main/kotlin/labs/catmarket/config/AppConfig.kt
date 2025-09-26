@@ -1,51 +1,53 @@
 package labs.catmarket.config
 
-import labs.catmarket.application.usecase.category.CreateCategoryUsecase
-import labs.catmarket.application.usecase.category.DeleteCategoryByIdUsecase
-import labs.catmarket.application.usecase.category.GetAllCategoriesUsecase
-import labs.catmarket.application.usecase.category.GetCategoryByIdUsecase
-import labs.catmarket.application.usecase.category.UpdateCategoryByIdUsecase
-import labs.catmarket.application.usecase.product.CreateProductUsecase
+import labs.catmarket.application.useCase.category.*
+import labs.catmarket.application.useCase.product.*
 import labs.catmarket.domain.category.CategoryRepository
 import labs.catmarket.domain.product.ProductRepository
 import labs.catmarket.persistence.category.CategoryMockRepository
 import labs.catmarket.persistence.product.ProductMockRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.util.UUID
 
 @Configuration
 class AppConfig {
 
-    //Category
+    //=====================================Category=======================================
     @Bean
     fun categoryRepository(): CategoryRepository = CategoryMockRepository()
 
     @Bean
-    fun createCategoryUsecase(categoryRepository: CategoryRepository): CreateCategoryUsecase =
-        CreateCategoryUsecase(categoryRepository)
+    fun createCategoryUseCase(categoryRepository: CategoryRepository) = CreateCategoryUseCase(categoryRepository)
 
     @Bean
-    fun getCategoryByIdUsecase(categoryRepository: CategoryRepository): GetCategoryByIdUsecase =
-        GetCategoryByIdUsecase(categoryRepository)
+    fun getCategoryByIdUseCase(categoryRepository: CategoryRepository) = GetCategoryByIdUseCase(categoryRepository)
 
     @Bean
-    fun getAllCategoriesUsecase(categoryRepository: CategoryRepository): GetAllCategoriesUsecase =
-        GetAllCategoriesUsecase(categoryRepository)
+    fun getAllCategoriesUseCase(categoryRepository: CategoryRepository) = GetAllCategoriesUseCase(categoryRepository)
 
     @Bean
-    fun updateCategoryByIdUsecase(categoryRepository: CategoryRepository): UpdateCategoryByIdUsecase =
-        UpdateCategoryByIdUsecase(categoryRepository)
+    fun updateCategoryByIdUseCase(categoryRepository: CategoryRepository) = UpdateCategoryByIdUseCase(categoryRepository)
 
     @Bean
-    fun deleteCategoryByIdUsecase(categoryRepository: CategoryRepository): DeleteCategoryByIdUsecase =
-        DeleteCategoryByIdUsecase(categoryRepository)
+    fun deleteCategoryByIdUseCase(categoryRepository: CategoryRepository) = DeleteCategoryByIdUseCase(categoryRepository)
 
-    //Product
+
+    //========================================Product==========================================
     @Bean
     fun productRepository(): ProductRepository = ProductMockRepository()
 
     @Bean
-    fun createProductUsecase(productRepository: ProductRepository): CreateProductUsecase =
-        CreateProductUsecase(productRepository)
+    fun createProductUseCase(productRepository: ProductRepository) = CreateProductUseCase(productRepository)
+
+    @Bean
+    fun getProductByIdUseCase(productRepository: ProductRepository) = GetProductByIdUseCase(productRepository)
+
+    @Bean
+    fun getAllProductsUseCase(productRepository: ProductRepository) = GetAllProductsUseCase(productRepository)
+
+    @Bean
+    fun updateProductByIdUseCase(productRepository: ProductRepository) = UpdateProductByIdUseCase(productRepository)
+
+    @Bean
+    fun deleteProductByIdUseCase(productRepository: ProductRepository) = DeleteProductByIdUseCase(productRepository)
 }

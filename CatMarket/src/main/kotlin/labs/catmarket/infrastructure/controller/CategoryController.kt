@@ -1,10 +1,10 @@
 package labs.catmarket.infrastructure.controller
 
-import labs.catmarket.application.usecase.category.CreateCategoryUsecase
-import labs.catmarket.application.usecase.category.DeleteCategoryByIdUsecase
-import labs.catmarket.application.usecase.category.GetAllCategoriesUsecase
-import labs.catmarket.application.usecase.category.GetCategoryByIdUsecase
-import labs.catmarket.application.usecase.category.UpdateCategoryByIdUsecase
+import labs.catmarket.application.useCase.category.CreateCategoryUseCase
+import labs.catmarket.application.useCase.category.DeleteCategoryByIdUseCase
+import labs.catmarket.application.useCase.category.GetAllCategoriesUseCase
+import labs.catmarket.application.useCase.category.GetCategoryByIdUseCase
+import labs.catmarket.application.useCase.category.UpdateCategoryByIdUseCase
 import labs.catmarket.infrastructure.dto.requet.busines.CategoryDtoRequest
 import labs.catmarket.infrastructure.dto.response.busines.CategoryDtoResponse
 import labs.catmarket.infrastructure.mapper.CategoryWebMapper
@@ -24,41 +24,41 @@ import java.util.UUID
 @RequestMapping("/api/v1/categories")
 class CategoryController(
     private val categoryWebMapper: CategoryWebMapper,
-    private val createCategoryUsecase: CreateCategoryUsecase,
-    private val getCategoryByIdUsecase: GetCategoryByIdUsecase,
-    private val getAllCategoriesUsecase: GetAllCategoriesUsecase,
-    private val updateCategoryByIdUsecase: UpdateCategoryByIdUsecase,
-    private val deleteCategoryByIdUsecase: DeleteCategoryByIdUsecase
+    private val createCategoryUseCase: CreateCategoryUseCase,
+    private val getCategoryByIdUseCase: GetCategoryByIdUseCase,
+    private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
+    private val updateCategoryByIdUseCase: UpdateCategoryByIdUseCase,
+    private val deleteCategoryByIdUseCase: DeleteCategoryByIdUseCase
 ) {
 
     @PostMapping
     fun save(@RequestBody request: CategoryDtoRequest): ResponseEntity<CategoryDtoResponse>{
-        val domainCategory = categoryWebMapper.toDomain(request)
-        val response = categoryWebMapper.toDto(createCategoryUsecase.execute(domainCategory))
+        val command = categoryWebMapper.toCommand(request)
+        val response = categoryWebMapper.toDto(createCategoryUseCase.execute(command))
         val location = URI.create("/api/v1/categories/${response.id}")
         return ResponseEntity.created(location).body(response)
     }
 
     @GetMapping
-    fun getAll() = ResponseEntity.ok(getAllCategoriesUsecase.execute())
+    fun getAll() = ResponseEntity.ok(getAllCategoriesUseCase.execute(Unit))
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID) =
-         ResponseEntity.ok(categoryWebMapper.toDto(getCategoryByIdUsecase.execute(id)))
+         ResponseEntity.ok(categoryWebMapper.toDto(getCategoryByIdUseCase.execute(id)))
 
     @PutMapping("/{id}")
     fun updateById(
         @PathVariable id: UUID,
         @RequestBody request: CategoryDtoRequest
     ): ResponseEntity<CategoryDtoResponse> {
-        val domainCategory = categoryWebMapper.toDomain(request)
-        val response = categoryWebMapper.toDto(updateCategoryByIdUsecase.execute(id,domainCategory))
+        val pair = id to categoryWebMapper.toCommand(request)
+        val response = categoryWebMapper.toDto(updateCategoryByIdUseCase.execute(pair))
         return ResponseEntity.ok(response)
     }
 
     @DeleteMapping("/{id}")
     fun deleteById(@PathVariable id: UUID): ResponseEntity<Void>{
-        deleteCategoryByIdUsecase.execute(id)
+        deleteCategoryByIdUseCase.execute(id)
         return ResponseEntity.noContent().build()
     }
 }

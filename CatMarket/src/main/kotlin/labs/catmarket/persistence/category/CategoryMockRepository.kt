@@ -2,6 +2,7 @@ package labs.catmarket.persistence.category
 
 import labs.catmarket.domain.category.Category
 import labs.catmarket.domain.category.CategoryRepository
+import labs.catmarket.domain.product.Product
 import labs.catmarket.persistence.exception.EntityAlreadyExistsException
 import labs.catmarket.persistence.exception.EntityNotFoundException
 import org.springframework.stereotype.Repository
@@ -16,23 +17,22 @@ class CategoryMockRepository : CategoryRepository {
         categoryStorage.remove(id)
     }
 
-    override fun save(category: Category): Category {
-        val exists =categoryStorage.values.any { it.name.equals(category.name, ignoreCase = true) }
-        if (exists)
-            throw EntityAlreadyExistsException("This category is already exists")
-
-        categoryStorage[category.id!!] = category
-        return category
+    override fun save(domain: Category): Category {
+        categoryStorage[domain.id!!] = domain
+        return domain
     }
 
     override fun findAll(): List<Category> = categoryStorage.map { it.value }.toList()
 
-    override fun findById(id: UUID): Category {
+    override fun findById(id: UUID): Category? {
         return categoryStorage[id]
-            ?: throw EntityNotFoundException("Category with id=$id not found")
     }
 
     override fun existsById(id: UUID): Boolean {
         return categoryStorage.contains(id)
     }
+
+    override fun existsByName(name: String) =
+        categoryStorage.values.any { it.name.equals(name, ignoreCase = true)}
+
 }
