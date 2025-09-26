@@ -1,8 +1,12 @@
 package labs.catmarket.application.useCase.product
 
+import labs.catmarket.application.useCase.UseCase
+import labs.catmarket.domain.product.Product
 import labs.catmarket.domain.product.ProductRepository
+import labs.catmarket.persistence.exception.EntityNotFoundException
 import java.util.UUID
 
-class GetProductByIdUseCase(private val productRepository: ProductRepository) {
-
+class GetProductByIdUseCase(private val productRepository: ProductRepository) : UseCase<UUID, Product>{
+    override fun execute(command: UUID) = productRepository.findById(command)
+        ?: throw EntityNotFoundException("Entity with id=$command not found")
 }

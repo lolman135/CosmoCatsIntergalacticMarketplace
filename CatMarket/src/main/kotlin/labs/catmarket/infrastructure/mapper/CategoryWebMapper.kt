@@ -11,4 +11,5 @@ interface CategoryWebMapper {
 
     fun toCommand(request: CategoryDtoRequest): UpsertCategoryCommand
     fun toDto(domain: Category): CategoryDtoResponse
+    fun toDtoList(domains: List<Category>): List<CategoryDtoResponse>
 }

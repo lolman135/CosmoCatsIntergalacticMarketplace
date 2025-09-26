@@ -40,7 +40,8 @@ class CategoryController(
     }
 
     @GetMapping
-    fun getAll() = ResponseEntity.ok(getAllCategoriesUseCase.execute(Unit))
+    fun getAll() = ResponseEntity
+        .ok(categoryWebMapper.toDtoList(getAllCategoriesUseCase.execute(Unit)))
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID) =
