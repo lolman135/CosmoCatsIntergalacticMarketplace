@@ -37,7 +37,10 @@ class AppConfig {
     fun productRepository(): ProductRepository = ProductMockRepository()
 
     @Bean
-    fun createProductUseCase(productRepository: ProductRepository) = CreateProductUseCase(productRepository)
+    fun createProductUseCase(
+        productRepository: ProductRepository,
+        categoryRepository: CategoryRepository
+    ) = CreateProductUseCase(productRepository, categoryRepository)
 
     @Bean
     fun getProductByIdUseCase(productRepository: ProductRepository) = GetProductByIdUseCase(productRepository)
@@ -46,7 +49,10 @@ class AppConfig {
     fun getAllProductsUseCase(productRepository: ProductRepository) = GetAllProductsUseCase(productRepository)
 
     @Bean
-    fun updateProductByIdUseCase(productRepository: ProductRepository) = UpdateProductByIdUseCase(productRepository)
+    fun updateProductByIdUseCase(
+        productRepository: ProductRepository,
+        categoryRepository: CategoryRepository
+    ) = UpdateProductByIdUseCase(productRepository, categoryRepository)
 
     @Bean
     fun deleteProductByIdUseCase(productRepository: ProductRepository) = DeleteProductByIdUseCase(productRepository)

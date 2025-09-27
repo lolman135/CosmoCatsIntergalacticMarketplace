@@ -1,4 +1,4 @@
-package labs.catmarket.infrastructure.dto.response.busines
+package labs.catmarket.infrastructure.dto.response
 
 import java.util.UUID
 

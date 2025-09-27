@@ -2,9 +2,17 @@ openapi: 3.0.1
 info:
   title: CatMarket API
   version: 1.0.0
+
+tags:
+  - name: Categories
+    description: Operations with categories
+  - name: Products
+    description: Operations with products
+
 paths:
   /api/v1/categories:
     post:
+      tags: [Categories]
       summary: Create a category
       requestBody:
         required: true
@@ -32,6 +40,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorDtoResponse'
     get:
+      tags: [Categories]
       summary: Get all categories
       responses:
         '200':
@@ -44,6 +53,7 @@ paths:
                   $ref: '#/components/schemas/CategoryDtoResponse'
   /api/v1/categories/{id}:
     get:
+      tags: [Categories]
       summary: Get category by ID
       parameters:
         - name: id
@@ -66,6 +76,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorDtoResponse'
     put:
+      tags: [Categories]
       summary: Update category by ID
       parameters:
         - name: id
@@ -100,6 +111,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorDtoResponse'
     delete:
+      tags: [Categories]
       summary: Delete category by ID
       parameters:
         - name: id
@@ -113,6 +125,126 @@ paths:
           description: Category deleted
         '404':
           description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+
+  /api/v1/products:
+    post:
+      tags: [Products]
+      summary: Create a product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDtoRequest'
+      responses:
+        '201':
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDtoResponse'
+        '400':
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+        '409':
+          description: Conflict (e.g., product already exists)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+    get:
+      tags: [Products]
+      summary: Get all products
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDtoResponse'
+  /api/v1/products/{id}:
+    get:
+      tags: [Products]
+      summary: Get product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDtoResponse'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+    put:
+      tags: [Products]
+      summary: Update product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDtoRequest'
+      responses:
+        '200':
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDtoResponse'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+        '409':
+          description: Update conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDtoResponse'
+    delete:
+      tags: [Products]
+      summary: Delete product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Product deleted
+        '404':
+          description: Product not found
           content:
             application/json:
               schema:
@@ -134,6 +266,38 @@ components:
           type: string
           format: uuid
         name:
+          type: string
+    ProductDtoRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: integer
+          minimum: 1
+        imageUrl:
+          type: string
+        categoryId:
+          type: string
+          format: uuid
+      required:
+        - name
+        - price
+        - imageUrl
+        - categoryId
+    ProductDtoResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        price:
+          type: integer
+        imageUrl:
+          type: string
+        category:
           type: string
     ErrorDtoResponse:
       type: object

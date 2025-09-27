@@ -2,9 +2,6 @@ package labs.catmarket.persistence.category
 
 import labs.catmarket.domain.category.Category
 import labs.catmarket.domain.category.CategoryRepository
-import labs.catmarket.domain.product.Product
-import labs.catmarket.persistence.exception.EntityAlreadyExistsException
-import labs.catmarket.persistence.exception.EntityNotFoundException
 import org.springframework.stereotype.Repository
 import java.util.UUID
 

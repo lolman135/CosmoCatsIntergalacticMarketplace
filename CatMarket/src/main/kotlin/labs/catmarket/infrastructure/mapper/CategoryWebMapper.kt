@@ -3,7 +3,7 @@ package labs.catmarket.infrastructure.mapper
 import labs.catmarket.application.useCase.category.UpsertCategoryCommand
 import labs.catmarket.domain.category.Category
 import labs.catmarket.infrastructure.dto.requet.busines.CategoryDtoRequest
-import labs.catmarket.infrastructure.dto.response.busines.CategoryDtoResponse
+import labs.catmarket.infrastructure.dto.response.CategoryDtoResponse
 import org.mapstruct.Mapper
 
 @Mapper(componentModel = "spring")

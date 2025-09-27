@@ -1,14 +1,16 @@
 package labs.catmarket.infrastructure.controller
 
+import jakarta.validation.Valid
 import labs.catmarket.application.useCase.category.CreateCategoryUseCase
 import labs.catmarket.application.useCase.category.DeleteCategoryByIdUseCase
 import labs.catmarket.application.useCase.category.GetAllCategoriesUseCase
 import labs.catmarket.application.useCase.category.GetCategoryByIdUseCase
 import labs.catmarket.application.useCase.category.UpdateCategoryByIdUseCase
 import labs.catmarket.infrastructure.dto.requet.busines.CategoryDtoRequest
-import labs.catmarket.infrastructure.dto.response.busines.CategoryDtoResponse
+import labs.catmarket.infrastructure.dto.response.CategoryDtoResponse
 import labs.catmarket.infrastructure.mapper.CategoryWebMapper
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -22,6 +24,7 @@ import java.util.UUID
 
 @RestController
 @RequestMapping("/api/v1/categories")
+@Validated
 class CategoryController(
     private val categoryWebMapper: CategoryWebMapper,
     private val createCategoryUseCase: CreateCategoryUseCase,
@@ -32,7 +35,7 @@ class CategoryController(
 ) {
 
     @PostMapping
-    fun save(@RequestBody request: CategoryDtoRequest): ResponseEntity<CategoryDtoResponse>{
+    fun save(@RequestBody @Valid request: CategoryDtoRequest): ResponseEntity<CategoryDtoResponse>{
         val command = categoryWebMapper.toCommand(request)
         val response = categoryWebMapper.toDto(createCategoryUseCase.execute(command))
         val location = URI.create("/api/v1/categories/${response.id}")
@@ -50,7 +53,7 @@ class CategoryController(
     @PutMapping("/{id}")
     fun updateById(
         @PathVariable id: UUID,
-        @RequestBody request: CategoryDtoRequest
+        @RequestBody @Valid request: CategoryDtoRequest
     ): ResponseEntity<CategoryDtoResponse> {
         val pair = id to categoryWebMapper.toCommand(request)
         val response = categoryWebMapper.toDto(updateCategoryByIdUseCase.execute(pair))

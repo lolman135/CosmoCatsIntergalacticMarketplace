@@ -1,87 +1,76 @@
 package labs.catmarket.infrastructure.exception
 
 import jakarta.servlet.http.HttpServletRequest
-import labs.catmarket.infrastructure.dto.response.error.ErrorDtoResponse
-import labs.catmarket.persistence.exception.EntityAlreadyExistsException
-import labs.catmarket.persistence.exception.EntityNotFoundException
+import labs.catmarket.application.exception.EntityAlreadyExistsException
+import labs.catmarket.application.exception.EntityNotFoundException
 import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatusCode
+import org.springframework.http.ProblemDetail
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.context.request.WebRequest
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import java.net.URI
 
 @ControllerAdvice
-class GlobalExceptionHandler {
+class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(EntityNotFoundException::class)
-    fun handleEntityNotFoundException(
-        ex: EntityNotFoundException,
-        request: HttpServletRequest
-    ): ResponseEntity<ErrorDtoResponse>{
-
-        val error = ErrorDtoResponse(
-            status = HttpStatus.NOT_FOUND.value(),
-            error = "Nor Found",
-            message = ex.message,
-            path = request.servletPath
-        )
-        return ResponseEntity(error, HttpStatus.NOT_FOUND)
+    fun handleEntityNotFoundException(ex: EntityNotFoundException, request: HttpServletRequest): ProblemDetail {
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message ?: "Not Found")
+        problem.title = "Not Found"
+        problem.type = URI.create("https://example.com/errors/not-found")
+        problem.instance = URI.create(request.requestURI)
+        return problem
     }
 
     @ExceptionHandler(EntityAlreadyExistsException::class)
-    fun handleEntityAlreadyExistsException(
-        ex: EntityAlreadyExistsException,
-        request: HttpServletRequest
-    ): ResponseEntity<ErrorDtoResponse>{
-
-        val error = ErrorDtoResponse(
-            status = HttpStatus.CONFLICT.value(),
-            error = "Conflict",
-            message = ex.message,
-            path = request.servletPath
-        )
-        return ResponseEntity(error, HttpStatus.CONFLICT)
+    fun handleEntityAlreadyExistsException(ex: EntityAlreadyExistsException, request: HttpServletRequest): ProblemDetail {
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.message ?: "Conflict")
+        problem.title = "Conflict"
+        problem.type = URI.create("https://example.com/errors/conflict")
+        problem.instance = URI.create(request.requestURI)
+        return problem
     }
 
     @ExceptionHandler(IllegalArgumentException::class)
-    fun handleIllegalArgumentException(
-        ex: IllegalArgumentException,
-        request: HttpServletRequest
-    ): ResponseEntity<ErrorDtoResponse> {
-
-        val error = ErrorDtoResponse(
-            status = HttpStatus.BAD_REQUEST.value(),
-            error = "Conflict",
-            message = ex.message,
-            path = request.servletPath
-        )
-        return ResponseEntity(error, HttpStatus.BAD_REQUEST)
+    fun handleIllegalArgumentException(ex: IllegalArgumentException, request: HttpServletRequest): ProblemDetail {
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.message ?: "Bad Request")
+        problem.title = "Bad Request"
+        problem.type = URI.create("https://example.com/errors/bad-request")
+        problem.instance = URI.create(request.requestURI)
+        return problem
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleValidation(ex: MethodArgumentNotValidException, request: HttpServletRequest): ResponseEntity<ErrorDtoResponse> {
+
+
+    override fun handleMethodArgumentNotValid(
+        ex: MethodArgumentNotValidException,
+        headers: org.springframework.http.HttpHeaders,
+        status: HttpStatusCode,
+        request: WebRequest
+    ): ResponseEntity<Any> {
+
         val errors = ex.bindingResult.fieldErrors
             .associate { it.field to (it.defaultMessage ?: "Invalid value") }
 
-        val response = ErrorDtoResponse(
-            status = HttpStatus.BAD_REQUEST.value(),
-            error = "Bad Request",
-            message = "Validation failed",
-            errors = errors,
-            path = request.servletPath
-        )
-        return ResponseEntity(response, HttpStatus.BAD_REQUEST)
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Validation failed")
+        problem.title = "Bad Request"
+        problem.type = URI.create("https://example.com/errors/validation-failed")
+        problem.instance = URI.create(request.getDescription(false).removePrefix("uri="))
+        problem.setProperty("errors", errors)
+
+        return ResponseEntity(problem, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(Exception::class)
-    fun handleAll(ex: Exception, request: HttpServletRequest): ResponseEntity<ErrorDtoResponse> {
-        val response = ErrorDtoResponse(
-            status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            error = "Internal Server Error",
-            message = ex.message,
-            path = request.servletPath
-        )
-        return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
+    fun handleAll(ex: Exception, request: HttpServletRequest): ProblemDetail {
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ex.message ?: "Internal Server Error")
+        problem.title = "Internal Server Error"
+        problem.type = URI.create("https://example.com/errors/internal-server-error")
+        problem.instance = URI.create(request.requestURI)
+        return problem
     }
 }
