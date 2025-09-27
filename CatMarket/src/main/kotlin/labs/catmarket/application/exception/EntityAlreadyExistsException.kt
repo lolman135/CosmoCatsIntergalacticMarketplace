@@ -1,3 +1,3 @@
-package labs.catmarket.persistence.exception
+package labs.catmarket.application.exception
 
 class EntityAlreadyExistsException(override val message: String) : IllegalArgumentException(message)

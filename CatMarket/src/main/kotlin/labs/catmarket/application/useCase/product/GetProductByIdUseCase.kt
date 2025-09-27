@@ -3,7 +3,7 @@ package labs.catmarket.application.useCase.product
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.domain.product.Product
 import labs.catmarket.domain.product.ProductRepository
-import labs.catmarket.persistence.exception.EntityNotFoundException
+import labs.catmarket.application.exception.EntityNotFoundException
 import java.util.UUID
 
 class GetProductByIdUseCase(private val productRepository: ProductRepository) : UseCase<UUID, Product>{
