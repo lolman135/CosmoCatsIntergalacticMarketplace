@@ -3,6 +3,7 @@ package labs.catmarket.infrastructure.exception
 import jakarta.servlet.http.HttpServletRequest
 import labs.catmarket.application.exception.EntityAlreadyExistsException
 import labs.catmarket.application.exception.EntityNotFoundException
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ProblemDetail
@@ -17,21 +18,28 @@ import java.net.URI
 @ControllerAdvice
 class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 
+    private val log = LoggerFactory.getLogger(this::class.java)
+
     @ExceptionHandler(EntityNotFoundException::class)
     fun handleEntityNotFoundException(ex: EntityNotFoundException, request: HttpServletRequest): ProblemDetail {
-        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message ?: "Not Found")
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message)
         problem.title = "Not Found"
         problem.type = URI.create("https://example.com/errors/not-found")
         problem.instance = URI.create(request.requestURI)
+        log.warn(ex.message)
         return problem
     }
 
     @ExceptionHandler(EntityAlreadyExistsException::class)
-    fun handleEntityAlreadyExistsException(ex: EntityAlreadyExistsException, request: HttpServletRequest): ProblemDetail {
-        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.message ?: "Conflict")
+    fun handleEntityAlreadyExistsException(
+        ex: EntityAlreadyExistsException,
+        request: HttpServletRequest
+    ): ProblemDetail {
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.message)
         problem.title = "Conflict"
         problem.type = URI.create("https://example.com/errors/conflict")
         problem.instance = URI.create(request.requestURI)
+        log.warn(ex.message)
         return problem
     }
 
@@ -41,10 +49,9 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         problem.title = "Bad Request"
         problem.type = URI.create("https://example.com/errors/bad-request")
         problem.instance = URI.create(request.requestURI)
+        log.warn(ex.message)
         return problem
     }
-
-
 
     override fun handleMethodArgumentNotValid(
         ex: MethodArgumentNotValidException,
@@ -61,16 +68,18 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         problem.type = URI.create("https://example.com/errors/validation-failed")
         problem.instance = URI.create(request.getDescription(false).removePrefix("uri="))
         problem.setProperty("errors", errors)
-
+        log.warn(ex.message)
         return ResponseEntity(problem, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(Exception::class)
     fun handleAll(ex: Exception, request: HttpServletRequest): ProblemDetail {
-        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ex.message ?: "Internal Server Error")
+        val problem =
+            ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ex.message ?: "Internal Server Error")
         problem.title = "Internal Server Error"
         problem.type = URI.create("https://example.com/errors/internal-server-error")
         problem.instance = URI.create(request.requestURI)
+        log.warn(ex.message)
         return problem
     }
 }
