@@ -8,8 +8,5 @@ import java.util.UUID
 class ProductWebMapperHelper(
     private val getCategoryByIdUseCase: GetCategoryByIdUseCase
 ) {
-    fun categoryNameFromId(categoryId: UUID): String {
-        val category = getCategoryByIdUseCase.execute(categoryId)
-        return category.name
-    }
+    fun categoryNameFromId(categoryId: UUID) = getCategoryByIdUseCase.execute(categoryId).name
 }

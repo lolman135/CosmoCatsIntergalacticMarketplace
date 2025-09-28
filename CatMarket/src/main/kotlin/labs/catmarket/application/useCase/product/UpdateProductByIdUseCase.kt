@@ -27,6 +27,7 @@ class UpdateProductByIdUseCase(
 
         val updatedProduct = product
             .rename(executingCommand.name)
+            .changeDescription(executingCommand.description)
             .changePrice(executingCommand.price)
             .changeUrl(executingCommand.imageUrl)
             .copy(categoryId = executingCommand.categoryId)

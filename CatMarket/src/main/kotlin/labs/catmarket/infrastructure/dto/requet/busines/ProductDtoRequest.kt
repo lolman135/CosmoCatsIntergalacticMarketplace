@@ -12,6 +12,10 @@ data class ProductDtoRequest(
     @field:Size(max = 100, message = "Product name must be at most 100 characters")
     val name: String,
 
+    @field:NotBlank(message = "Product description must not be blank")
+    @field:Size(max = 300, message = "Product description must be at most 300 characters")
+    val description: String,
+
     @field:Min(value = 1, message = "Price must be greater than 0")
     val price: Int,
 

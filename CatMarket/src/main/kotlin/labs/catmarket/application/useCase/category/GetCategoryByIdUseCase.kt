@@ -8,7 +8,7 @@ import java.util.UUID
 
 class GetCategoryByIdUseCase(private val categoryRepository: CategoryRepository) : UseCase<UUID, Category> {
 
-    override fun execute(command: UUID) = categoryRepository.findById(command)
-        ?: throw EntityNotFoundException("Category with id=$command not found")
+    override fun execute(id: UUID) = categoryRepository.findById(id)
+        ?: throw EntityNotFoundException("Category with id=$id not found")
 
 }

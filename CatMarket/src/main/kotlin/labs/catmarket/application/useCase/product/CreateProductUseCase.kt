@@ -22,6 +22,7 @@ class CreateProductUseCase(
         val product = Product(
             id = UUID.randomUUID(),
             name = command.name,
+            description = command.description,
             price = command.price,
             imageUrl = command.imageUrl,
             categoryId = command.categoryId

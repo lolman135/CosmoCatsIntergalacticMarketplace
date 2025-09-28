@@ -2,7 +2,10 @@ package labs.catmarket.domain.cart
 
 import java.util.UUID
 
-data class Cart(private val items: MutableList<CartItem> = mutableListOf()){
+data class Cart(
+    val userId: UUID,
+    private val items: MutableList<CartItem> = mutableListOf()
+){
 
     data class CartItem(val productId: UUID, val quantity: Int)
 

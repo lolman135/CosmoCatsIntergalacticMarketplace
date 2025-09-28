@@ -5,5 +5,5 @@ import labs.catmarket.domain.product.ProductRepository
 import java.util.UUID
 
 class DeleteProductByIdUseCase(private val productRepository: ProductRepository) : UseCase<UUID, Unit>{
-    override fun execute(command: UUID) = productRepository.deleteById(command)
+    override fun execute(id: UUID) = productRepository.deleteById(id)
 }
