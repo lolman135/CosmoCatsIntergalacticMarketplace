@@ -1,22 +1,22 @@
 package labs.catmarket.infrastructure.controller
 
+import jakarta.validation.constraints.Min
+import labs.catmarket.application.useCase.cart.AddProductCommand
 import labs.catmarket.application.useCase.cart.AddProductToCartUseCase
 import labs.catmarket.application.useCase.cart.CleanCartForUserUseCase
 import labs.catmarket.application.useCase.cart.GetCartByUserIdUseCase
-import labs.catmarket.infrastructure.dto.requet.busines.CartDtoRequest
+import labs.catmarket.infrastructure.dto.requet.busines.CartQuantityRequest
 import labs.catmarket.infrastructure.dto.response.CartDtoResponse
-import labs.catmarket.infrastructure.dto.response.CartItemDtoResponse
 import labs.catmarket.infrastructure.mapper.CartWebMapper
 import labs.catmarket.infrastructure.mapper.CartWebMapperHelper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.net.URI
 import java.util.UUID
 
 @RestController
@@ -29,28 +29,36 @@ class CartController(
     private val cleanCartForUserUseCase: CleanCartForUserUseCase
 ) {
 
-    @PostMapping
-    fun addProductToCart(@RequestBody request: CartDtoRequest): ResponseEntity<Unit>{
-        val command = cartWebMapper.toCommand(request)
+    //HTTP response: 204
+    @PutMapping("/items/{productId}")
+    fun addProductToCart(
+        @PathVariable productId: UUID,
+        @RequestBody request: CartQuantityRequest)
+    : ResponseEntity<Unit>{
+        val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")
+        val command = AddProductCommand(mockUserId, productId, request.quantity)
         addProductToCartUseCase.execute(command)
-        val location = URI.create("/api/v1/carts")
-        return ResponseEntity.created(location).build()
+        return ResponseEntity.noContent().build()
     }
 
-    @GetMapping("/{userId}")
-    fun getCartForUser(@PathVariable userId: UUID): ResponseEntity<CartDtoResponse> {
+    //HTTP response: 200, 404
+    @GetMapping
+    fun getCartForUser(): ResponseEntity<CartDtoResponse> {
+        val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")
         val response = CartDtoResponse(
-            userId = userId,
-            items = getCartByUserIdUseCase.execute(userId).getItems().map {
+            userId = mockUserId,
+            items = getCartByUserIdUseCase.execute(mockUserId).getItems().map {
                 cartWebMapper.toDto(it, cartWebMapperHelper)
             }.toList()
         )
         return ResponseEntity.ok(response)
     }
 
-    @DeleteMapping("/{userId}")
-    fun cleanCartForUser(@PathVariable userId: UUID): ResponseEntity<Unit> {
-        cleanCartForUserUseCase.execute(userId)
+    //HTTP response: 204
+    @DeleteMapping
+    fun cleanCartForUser(): ResponseEntity<Unit> {
+        val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")
+        cleanCartForUserUseCase.execute(mockUserId)
         return ResponseEntity.noContent().build()
     }
 }

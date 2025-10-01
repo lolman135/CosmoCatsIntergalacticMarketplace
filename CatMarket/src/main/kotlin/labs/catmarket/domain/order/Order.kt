@@ -5,9 +5,9 @@ import java.util.UUID
 
 data class Order(
     val id: UUID?,
-    val creationTime: LocalDateTime,
+    val creationTime: LocalDateTime = LocalDateTime.now(),
     val status: Status = Status.NEW,
-    val orderItems: MutableList<OrderItem>
+    val orderItems: List<OrderItem>
 ) {
     val totalCost: Int
         get() = orderItems.sumOf { it.pricePerUnit * it.quantity }

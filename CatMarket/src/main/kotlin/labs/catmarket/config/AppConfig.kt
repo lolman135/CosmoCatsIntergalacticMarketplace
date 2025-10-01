@@ -1,15 +1,21 @@
 package labs.catmarket.config
 
+import labs.catmarket.application.useCase.order.CreateOrderUseCase
 import labs.catmarket.application.useCase.cart.AddProductToCartUseCase
 import labs.catmarket.application.useCase.cart.CleanCartForUserUseCase
 import labs.catmarket.application.useCase.cart.GetCartByUserIdUseCase
 import labs.catmarket.application.useCase.category.*
+import labs.catmarket.application.useCase.order.DeleteOrderByIdUseCase
+import labs.catmarket.application.useCase.order.GetAllOrdersUseCase
+import labs.catmarket.application.useCase.order.GetOrderByIdUseCase
 import labs.catmarket.application.useCase.product.*
 import labs.catmarket.domain.cart.CartStorage
 import labs.catmarket.domain.category.CategoryRepository
+import labs.catmarket.domain.order.OrderRepository
 import labs.catmarket.domain.product.ProductRepository
 import labs.catmarket.infrastructure.common.CartStorageImpl
 import labs.catmarket.persistence.category.CategoryMockRepository
+import labs.catmarket.persistence.order.OrderMockRepository
 import labs.catmarket.persistence.product.ProductMockRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -68,7 +74,10 @@ class AppConfig {
     fun cartStorage(): CartStorage = CartStorageImpl()
 
     @Bean
-    fun addProductToCartUseCase(cartStorage: CartStorage) = AddProductToCartUseCase(cartStorage)
+    fun addProductToCartUseCase(
+        cartStorage: CartStorage,
+        productRepository: ProductRepository
+    ) = AddProductToCartUseCase(cartStorage, productRepository)
 
     @Bean
     fun getCartByUserIdUseCase(cartStorage: CartStorage) = GetCartByUserIdUseCase(cartStorage)
@@ -76,4 +85,24 @@ class AppConfig {
     @Bean
     fun cleanCartForUserUseCase(cartStorage: CartStorage) = CleanCartForUserUseCase(cartStorage)
 
+    //========================================Order==========================================
+
+    @Bean
+    fun orderRepository(): OrderRepository = OrderMockRepository()
+
+    @Bean
+    fun createOrderUseCase(
+        orderRepository: OrderRepository,
+        productRepository: ProductRepository,
+        cartStorage: CartStorage
+    ) = CreateOrderUseCase(orderRepository, productRepository, cartStorage)
+
+    @Bean
+    fun getAllOrdersUseCase(orderRepository: OrderRepository) = GetAllOrdersUseCase(orderRepository)
+
+    @Bean
+    fun getOrderByIdUseCase(orderRepository: OrderRepository) = GetOrderByIdUseCase(orderRepository)
+
+    @Bean
+    fun deleteOrderByIdUseCase(orderRepository: OrderRepository) = DeleteOrderByIdUseCase(orderRepository)
 }

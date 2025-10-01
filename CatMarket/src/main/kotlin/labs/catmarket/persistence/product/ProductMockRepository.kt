@@ -9,11 +9,11 @@ import java.util.UUID
 @Repository
 class ProductMockRepository : ProductRepository{
 
-    private val productStorage: MutableMap<UUID, Product> = mutableMapOf()
+    private val productHolder = mutableMapOf<UUID, Product>()
 
     init {
         val product1Id = UUID.randomUUID()
-        productStorage[product1Id] = Product(
+        productHolder[product1Id] = Product(
             id = product1Id,
             name = "Cucumber-9000 Pro Max",
             price = 1_000_000,
@@ -23,41 +23,41 @@ class ProductMockRepository : ProductRepository{
         )
 
         val product2Id = UUID.randomUUID()
-        productStorage[product2Id] = Product(
+        productHolder[product2Id] = Product(
             id = product2Id,
-            name = "Galactic Taco Supreme",
+            name = "Galactic Tomato Supreme",
             price = 250,
-            description = "Taco filled with zero-gravity sauce and cosmic beans",
+            description = "Uber fresh cosmic tomato with protective layer of nanopolymer",
             imageUrl = "http://image2.img",
             categoryId = UUID.fromString("dc7a64b5-eed7-47cf-ba2a-36592bba361e")
         )
 
         val product3Id = UUID.randomUUID()
-        productStorage[product3Id] = Product(
+        productHolder[product3Id] = Product(
             id = product3Id,
-            name = "Astro Burrito X",
+            name = "Astro Onion 300",
             price = 500,
-            description = "Burrito engineered for interstellar travel",
+            description = "Onion engineered for interstellar travel",
             imageUrl = "http://image3.img",
             categoryId = UUID.fromString("86762808-661b-4e42-a832-694221ba616b")
         )
     }
 
     override fun deleteById(id: UUID) {
-        productStorage.remove(id)
+        productHolder.remove(id)
     }
 
     override fun save(domain: Product): Product {
-        productStorage[domain.id!!] = domain
+        productHolder[domain.id!!] = domain
         return domain
     }
 
-    override fun findById(id: UUID) = productStorage[id]
+    override fun findById(id: UUID) = productHolder[id]
 
-    override fun findAll() = productStorage.map { it.value }.toList()
+    override fun findAll() = productHolder.values.toList()
 
-    override fun existsById(id: UUID) = productStorage.contains(id)
+    override fun existsById(id: UUID) = productHolder.contains(id)
 
     override fun existsByName(name: String) =
-        productStorage.values.any { it.name.equals(name, ignoreCase = true) }
+        productHolder.values.any { it.name.equals(name, ignoreCase = true) }
 }

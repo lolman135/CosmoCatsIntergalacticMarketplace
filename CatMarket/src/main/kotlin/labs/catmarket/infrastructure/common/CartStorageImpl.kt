@@ -2,8 +2,10 @@ package labs.catmarket.infrastructure.common
 
 import labs.catmarket.domain.cart.Cart
 import labs.catmarket.domain.cart.CartStorage
+import org.springframework.stereotype.Component
 import java.util.UUID
 
+@Component
 class CartStorageImpl : CartStorage {
 
     private val carts: MutableMap<UUID, Cart> = mutableMapOf()

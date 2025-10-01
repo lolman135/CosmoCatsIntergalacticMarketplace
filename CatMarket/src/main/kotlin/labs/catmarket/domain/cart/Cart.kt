@@ -13,7 +13,7 @@ data class Cart(
         val index = items.indexOfFirst { it.productId == productId }
         if(index >= 0){
             val existedItem = items[index]
-            items[index] = existedItem.copy(quantity= existedItem.quantity + quantity)
+            items[index] = existedItem.copy(quantity = quantity)
         } else{
             items.add(CartItem(productId, quantity))
         }
