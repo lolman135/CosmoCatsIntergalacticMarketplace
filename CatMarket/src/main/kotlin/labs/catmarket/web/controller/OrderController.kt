@@ -1,4 +1,4 @@
-package labs.catmarket.infrastructure.controller
+package labs.catmarket.web.controller
 
 import labs.catmarket.application.useCase.order.CreateOrderUseCase
 import labs.catmarket.application.useCase.order.DeleteOrderByIdUseCase

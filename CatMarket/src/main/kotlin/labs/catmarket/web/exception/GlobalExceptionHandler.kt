@@ -1,9 +1,10 @@
-package labs.catmarket.infrastructure.exception
+package labs.catmarket.web.exception
 
 import jakarta.servlet.http.HttpServletRequest
 import labs.catmarket.application.exception.EntityAlreadyExistsException
 import labs.catmarket.application.exception.EntityNotFoundException
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ProblemDetail
@@ -55,7 +56,7 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 
     override fun handleMethodArgumentNotValid(
         ex: MethodArgumentNotValidException,
-        headers: org.springframework.http.HttpHeaders,
+        headers: HttpHeaders,
         status: HttpStatusCode,
         request: WebRequest
     ): ResponseEntity<Any> {

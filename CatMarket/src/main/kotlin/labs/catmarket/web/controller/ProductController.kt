@@ -1,4 +1,4 @@
-package labs.catmarket.infrastructure.controller
+package labs.catmarket.web.controller
 
 import jakarta.validation.Valid
 import labs.catmarket.application.useCase.product.CreateProductUseCase
