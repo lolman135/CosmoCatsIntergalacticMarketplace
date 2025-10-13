@@ -3,8 +3,8 @@ package labs.catmarket.application.useCase.product
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.domain.product.Product
 import labs.catmarket.domain.product.ProductRepository
-import labs.catmarket.application.exception.EntityAlreadyExistsException
-import labs.catmarket.application.exception.EntityNotFoundException
+import labs.catmarket.application.exception.DomainAlreadyExistsException
+import labs.catmarket.application.exception.DomainNotFoundException
 import labs.catmarket.domain.category.CategoryRepository
 import java.util.UUID
 
@@ -17,10 +17,10 @@ class UpdateProductByIdUseCase(
         val (id, executingCommand) = command
 
         val product = (productRepository.findById(id)
-            ?: throw EntityNotFoundException("Product with id=$id not found"))
+            ?: throw DomainNotFoundException("Product", id))
 
         if (productRepository.existsByName(executingCommand.name) && product.name != executingCommand.name)
-            throw EntityAlreadyExistsException("This product is already exists")
+            throw DomainAlreadyExistsException("product")
 
         if (!categoryRepository.existsById(executingCommand.categoryId))
             throw IllegalArgumentException("Wrong categoryId provided")

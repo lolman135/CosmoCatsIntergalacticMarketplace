@@ -7,7 +7,7 @@ import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 
 @Mapper(componentModel = "spring")
-interface OrderWebMapper {
+interface OrderMapper {
 
     @Mapping(source = "orderItems", target = "items")
     fun toDto(order: Order): OrderDtoResponse

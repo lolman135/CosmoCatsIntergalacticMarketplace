@@ -6,8 +6,8 @@ import labs.catmarket.application.useCase.cart.CleanCartForUserUseCase
 import labs.catmarket.application.useCase.cart.GetCartByUserIdUseCase
 import labs.catmarket.infrastructure.dto.requet.busines.CartQuantityRequest
 import labs.catmarket.infrastructure.dto.response.CartDtoResponse
-import labs.catmarket.infrastructure.mapper.CartWebMapper
-import labs.catmarket.infrastructure.mapper.CartWebMapperHelper
+import labs.catmarket.infrastructure.mapper.CartMapper
+import labs.catmarket.infrastructure.mapper.CartMapperHelper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,8 +21,8 @@ import java.util.UUID
 @RestController
 @RequestMapping("/api/v1/carts")
 class CartController(
-    private val cartWebMapper: CartWebMapper,
-    private val cartWebMapperHelper: CartWebMapperHelper,
+    private val cartMapper: CartMapper,
+    private val cartMapperHelper: CartMapperHelper,
     private val addProductToCartUseCase: AddProductToCartUseCase,
     private val getCartByUserIdUseCase: GetCartByUserIdUseCase,
     private val cleanCartForUserUseCase: CleanCartForUserUseCase
@@ -47,7 +47,7 @@ class CartController(
         val response = CartDtoResponse(
             userId = mockUserId,
             items = getCartByUserIdUseCase.execute(mockUserId).getItems().map {
-                cartWebMapper.toDto(it, cartWebMapperHelper)
+                cartMapper.toDto(it, cartMapperHelper)
             }.toList()
         )
         return ResponseEntity.ok(response)

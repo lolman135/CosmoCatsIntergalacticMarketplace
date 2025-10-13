@@ -1,8 +1,9 @@
 package labs.catmarket.web.exception
 
 import jakarta.servlet.http.HttpServletRequest
-import labs.catmarket.application.exception.EntityAlreadyExistsException
-import labs.catmarket.application.exception.EntityNotFoundException
+import labs.catmarket.application.exception.CartNotFoundException
+import labs.catmarket.application.exception.DomainAlreadyExistsException
+import labs.catmarket.application.exception.DomainNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -21,8 +22,8 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    @ExceptionHandler(EntityNotFoundException::class)
-    fun handleEntityNotFoundException(ex: EntityNotFoundException, request: HttpServletRequest): ProblemDetail {
+    @ExceptionHandler(DomainNotFoundException::class)
+    fun handleDomainNotFoundException(ex: DomainNotFoundException, request: HttpServletRequest): ProblemDetail {
         val problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message)
         problem.title = "Not Found"
         problem.type = URI.create("https://example.com/errors/not-found")
@@ -31,9 +32,19 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         return problem
     }
 
-    @ExceptionHandler(EntityAlreadyExistsException::class)
-    fun handleEntityAlreadyExistsException(
-        ex: EntityAlreadyExistsException,
+    @ExceptionHandler(CartNotFoundException::class)
+    fun handleCartNotFoundException(ex: CartNotFoundException, request: HttpServletRequest): ProblemDetail {
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message)
+        problem.title = "Not Found"
+        problem.type = URI.create("https://example.com/errors/not-found")
+        problem.instance = URI.create(request.requestURI)
+        log.warn(ex.message)
+        return problem
+    }
+
+    @ExceptionHandler(DomainAlreadyExistsException::class)
+    fun handleDomainAlreadyExistsException(
+        ex: DomainAlreadyExistsException,
         request: HttpServletRequest
     ): ProblemDetail {
         val problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.message)

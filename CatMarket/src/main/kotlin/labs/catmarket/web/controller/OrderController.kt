@@ -5,13 +5,12 @@ import labs.catmarket.application.useCase.order.DeleteOrderByIdUseCase
 import labs.catmarket.application.useCase.order.GetAllOrdersUseCase
 import labs.catmarket.application.useCase.order.GetOrderByIdUseCase
 import labs.catmarket.infrastructure.dto.response.OrderDtoResponse
-import labs.catmarket.infrastructure.mapper.OrderWebMapper
+import labs.catmarket.infrastructure.mapper.OrderMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.net.URI
@@ -24,7 +23,7 @@ class OrderController(
     private val getAllOrdersUseCase: GetAllOrdersUseCase,
     private val getOrderByIdUseCase: GetOrderByIdUseCase,
     private val deleteOrderByIdUseCase: DeleteOrderByIdUseCase,
-    private val orderWebMapper: OrderWebMapper
+    private val orderMapper: OrderMapper
 ) {
 
     //Little bit about POST endpoint. To create an order, we need to get a cart by id of user.
@@ -37,16 +36,16 @@ class OrderController(
         val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")
         val order = createOrderUseCase.execute(mockUserId)
         val location = URI.create("/api/v1/orders/${order.id}")
-        return ResponseEntity.created(location).body(orderWebMapper.toDto(order))
+        return ResponseEntity.created(location).body(orderMapper.toDto(order))
     }
 
     @GetMapping
     fun getAllOrders() = ResponseEntity.ok(getAllOrdersUseCase.execute(Unit).map {
-        orderWebMapper.toDto(it)
+        orderMapper.toDto(it)
     })
 
     @GetMapping("/{id}")
-    fun getOrderById(@PathVariable id: UUID) = ResponseEntity.ok(orderWebMapper.toDto(getOrderByIdUseCase.execute(id)))
+    fun getOrderById(@PathVariable id: UUID) = ResponseEntity.ok(orderMapper.toDto(getOrderByIdUseCase.execute(id)))
 
     @DeleteMapping("/{id}")
     fun deleteOrderById(@PathVariable id: UUID): ResponseEntity<Void> {

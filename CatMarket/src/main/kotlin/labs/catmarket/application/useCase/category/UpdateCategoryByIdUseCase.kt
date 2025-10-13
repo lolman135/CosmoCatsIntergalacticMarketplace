@@ -3,8 +3,8 @@ package labs.catmarket.application.useCase.category
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.domain.category.Category
 import labs.catmarket.domain.category.CategoryRepository
-import labs.catmarket.application.exception.EntityAlreadyExistsException
-import labs.catmarket.application.exception.EntityNotFoundException
+import labs.catmarket.application.exception.DomainAlreadyExistsException
+import labs.catmarket.application.exception.DomainNotFoundException
 import java.util.UUID
 
 class UpdateCategoryByIdUseCase(private val categoryRepository: CategoryRepository)
@@ -15,13 +15,10 @@ class UpdateCategoryByIdUseCase(private val categoryRepository: CategoryReposito
         val (id, executingCommand) = command
 
         val category = categoryRepository.findById(id)
-            ?: throw EntityNotFoundException("Category with id=$id not found")
+            ?: throw DomainNotFoundException("Category", id)
 
-        if(category.name != executingCommand.name) {
-            if (categoryRepository.existsByName(executingCommand.name)){
-                throw EntityAlreadyExistsException("This Category already exists")
-            }
-        }
+        if(category.name != executingCommand.name && categoryRepository.existsByName(executingCommand.name))
+            throw DomainAlreadyExistsException("Category")
 
         val updatedCategory = category.rename(executingCommand.name)
         return categoryRepository.save(updatedCategory)

@@ -1,6 +1,6 @@
 package labs.catmarket.application.useCase.cart
 
-import labs.catmarket.application.exception.EntityNotFoundException
+import labs.catmarket.application.exception.DomainNotFoundException
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.domain.cart.Cart
 import labs.catmarket.domain.cart.CartStorage
@@ -13,7 +13,7 @@ class AddProductToCartUseCase (
 
     override fun execute(command: AddProductCommand) {
         if(!productRepository.existsById(command.productId))
-            throw EntityNotFoundException("Product with id=${command.productId} not found")
+            throw DomainNotFoundException("Product", command.productId)
 
         val cart = cartStorage.findByUserId(command.userId) ?: Cart(command.userId)
         cart.addProduct(command.productId, command.quantity)

@@ -7,11 +7,11 @@ import labs.catmarket.infrastructure.dto.response.ProductDtoResponse
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 
-@Mapper(componentModel = "spring", uses = [ProductWebMapperHelper::class])
-interface ProductWebMapper {
+@Mapper(componentModel = "spring", uses = [ProductMapperHelper::class])
+interface ProductMapper {
 
     fun toCommand(request: ProductDtoRequest): UpsertProductCommand
 
-    @Mapping(target = "category", expression = "java(productWebMapperHelper.categoryNameFromId(product.getCategoryId()))")
-    fun toDto(product: Product, productWebMapperHelper: ProductWebMapperHelper): ProductDtoResponse
+    @Mapping(target = "category", expression = "java(productMapperHelper.categoryNameFromId(product.getCategoryId()))")
+    fun toDto(product: Product, productMapperHelper: ProductMapperHelper): ProductDtoResponse
 }

@@ -7,7 +7,7 @@ import labs.catmarket.infrastructure.dto.response.CategoryDtoResponse
 import org.mapstruct.Mapper
 
 @Mapper(componentModel = "spring")
-interface CategoryWebMapper {
+interface CategoryMapper {
 
     fun toCommand(request: CategoryDtoRequest): UpsertCategoryCommand
     fun toDto(domain: Category): CategoryDtoResponse

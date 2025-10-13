@@ -8,8 +8,8 @@ import labs.catmarket.application.useCase.product.GetProductByIdUseCase
 import labs.catmarket.application.useCase.product.UpdateProductByIdUseCase
 import labs.catmarket.infrastructure.dto.requet.busines.ProductDtoRequest
 import labs.catmarket.infrastructure.dto.response.ProductDtoResponse
-import labs.catmarket.infrastructure.mapper.ProductWebMapper
-import labs.catmarket.infrastructure.mapper.ProductWebMapperHelper
+import labs.catmarket.infrastructure.mapper.ProductMapper
+import labs.catmarket.infrastructure.mapper.ProductMapperHelper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -27,8 +27,8 @@ import java.util.UUID
 @RequestMapping("/api/v1/products")
 @Validated
 class ProductController(
-    private val productWebMapper: ProductWebMapper,
-    private val productWebMapperHelper: ProductWebMapperHelper,
+    private val productMapper: ProductMapper,
+    private val productMapperHelper: ProductMapperHelper,
     private val createProductUseCase: CreateProductUseCase,
     private val getAllProductsUseCase: GetAllProductsUseCase,
     private val getProductByIdUseCase: GetProductByIdUseCase,
@@ -38,8 +38,8 @@ class ProductController(
 
     @PostMapping
     fun save(@RequestBody @Valid request: ProductDtoRequest): ResponseEntity<ProductDtoResponse> {
-        val command = productWebMapper.toCommand(request)
-        val response = productWebMapper.toDto(createProductUseCase.execute(command), productWebMapperHelper)
+        val command = productMapper.toCommand(request)
+        val response = productMapper.toDto(createProductUseCase.execute(command), productMapperHelper)
         val location = URI.create("/api/v1/categories/${response.id}")
         return ResponseEntity.created(location).body(response)
     }
@@ -47,14 +47,14 @@ class ProductController(
     @GetMapping
     fun getAll() =
         ResponseEntity.ok(getAllProductsUseCase.execute(Unit).map {
-            productWebMapper.toDto(it, productWebMapperHelper)
+            productMapper.toDto(it, productMapperHelper)
         })
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID) =
-        ResponseEntity.ok(productWebMapper.toDto(
+        ResponseEntity.ok(productMapper.toDto(
             getProductByIdUseCase.execute(id),
-            productWebMapperHelper)
+            productMapperHelper)
         )
 
     @PutMapping("/{id}")
@@ -62,8 +62,8 @@ class ProductController(
         @PathVariable id: UUID,
         @RequestBody @Valid request: ProductDtoRequest
     ): ResponseEntity<ProductDtoResponse> {
-        val pair = id to productWebMapper.toCommand(request)
-        val response = productWebMapper.toDto(updateProductByIdUseCase.execute(pair), productWebMapperHelper)
+        val pair = id to productMapper.toCommand(request)
+        val response = productMapper.toDto(updateProductByIdUseCase.execute(pair), productMapperHelper)
         return ResponseEntity.ok(response)
     }
 

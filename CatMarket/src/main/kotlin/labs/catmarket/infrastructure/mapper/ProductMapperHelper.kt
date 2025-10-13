@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class ProductWebMapperHelper(
+class ProductMapperHelper(
     private val getCategoryByIdUseCase: GetCategoryByIdUseCase
 ) {
     fun categoryNameFromId(categoryId: UUID) = getCategoryByIdUseCase.execute(categoryId).name
