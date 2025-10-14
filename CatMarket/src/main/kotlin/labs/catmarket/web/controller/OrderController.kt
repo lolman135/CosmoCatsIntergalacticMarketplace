@@ -4,8 +4,8 @@ import labs.catmarket.application.useCase.order.CreateOrderUseCase
 import labs.catmarket.application.useCase.order.DeleteOrderByIdUseCase
 import labs.catmarket.application.useCase.order.GetAllOrdersUseCase
 import labs.catmarket.application.useCase.order.GetOrderByIdUseCase
-import labs.catmarket.infrastructure.dto.response.OrderDtoResponse
-import labs.catmarket.infrastructure.mapper.OrderMapper
+import labs.catmarket.dto.response.OrderDtoResponse
+import labs.catmarket.mapper.OrderMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

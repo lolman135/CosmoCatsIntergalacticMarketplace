@@ -13,10 +13,10 @@ import labs.catmarket.domain.cart.CartStorage
 import labs.catmarket.domain.category.CategoryRepository
 import labs.catmarket.domain.order.OrderRepository
 import labs.catmarket.domain.product.ProductRepository
-import labs.catmarket.infrastructure.common.CartStorageImpl
-import labs.catmarket.persistence.category.CategoryMockRepository
-import labs.catmarket.persistence.order.OrderMockRepository
-import labs.catmarket.persistence.product.ProductMockRepository
+import labs.catmarket.common.CartStorageImpl
+import labs.catmarket.repository.category.CategoryMockRepository
+import labs.catmarket.repository.order.OrderMockRepository
+import labs.catmarket.repository.product.ProductMockRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

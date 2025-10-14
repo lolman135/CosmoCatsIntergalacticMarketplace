@@ -6,9 +6,9 @@ import labs.catmarket.application.useCase.category.DeleteCategoryByIdUseCase
 import labs.catmarket.application.useCase.category.GetAllCategoriesUseCase
 import labs.catmarket.application.useCase.category.GetCategoryByIdUseCase
 import labs.catmarket.application.useCase.category.UpdateCategoryByIdUseCase
-import labs.catmarket.infrastructure.dto.requet.busines.CategoryDtoRequest
-import labs.catmarket.infrastructure.dto.response.CategoryDtoResponse
-import labs.catmarket.infrastructure.mapper.CategoryMapper
+import labs.catmarket.dto.requet.busines.CategoryDtoRequest
+import labs.catmarket.dto.response.CategoryDtoResponse
+import labs.catmarket.mapper.CategoryMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping

@@ -6,10 +6,10 @@ import labs.catmarket.application.useCase.product.DeleteProductByIdUseCase
 import labs.catmarket.application.useCase.product.GetAllProductsUseCase
 import labs.catmarket.application.useCase.product.GetProductByIdUseCase
 import labs.catmarket.application.useCase.product.UpdateProductByIdUseCase
-import labs.catmarket.infrastructure.dto.requet.busines.ProductDtoRequest
-import labs.catmarket.infrastructure.dto.response.ProductDtoResponse
-import labs.catmarket.infrastructure.mapper.ProductMapper
-import labs.catmarket.infrastructure.mapper.ProductMapperHelper
+import labs.catmarket.dto.requet.busines.ProductDtoRequest
+import labs.catmarket.dto.response.ProductDtoResponse
+import labs.catmarket.mapper.ProductMapper
+import labs.catmarket.mapper.ProductMapperHelper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

@@ -4,10 +4,10 @@ import labs.catmarket.application.useCase.cart.AddProductCommand
 import labs.catmarket.application.useCase.cart.AddProductToCartUseCase
 import labs.catmarket.application.useCase.cart.CleanCartForUserUseCase
 import labs.catmarket.application.useCase.cart.GetCartByUserIdUseCase
-import labs.catmarket.infrastructure.dto.requet.busines.CartQuantityRequest
-import labs.catmarket.infrastructure.dto.response.CartDtoResponse
-import labs.catmarket.infrastructure.mapper.CartMapper
-import labs.catmarket.infrastructure.mapper.CartMapperHelper
+import labs.catmarket.dto.requet.busines.CartQuantityRequest
+import labs.catmarket.dto.response.CartDtoResponse
+import labs.catmarket.mapper.CartMapper
+import labs.catmarket.mapper.CartMapperHelper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
