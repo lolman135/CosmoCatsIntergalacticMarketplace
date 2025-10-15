@@ -1,6 +1,5 @@
-package labs.catmarket.domain.product
+package labs.catmarket.domain
 
-import io.swagger.v3.core.model.ApiDescription
 import java.util.UUID
 import kotlin.require
 

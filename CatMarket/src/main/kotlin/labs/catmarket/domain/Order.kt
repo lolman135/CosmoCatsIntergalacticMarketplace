@@ -1,4 +1,4 @@
-package labs.catmarket.domain.order
+package labs.catmarket.domain
 
 import java.time.LocalDateTime
 import java.util.UUID

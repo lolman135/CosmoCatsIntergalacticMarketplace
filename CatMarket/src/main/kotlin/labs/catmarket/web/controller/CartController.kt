@@ -28,7 +28,6 @@ class CartController(
     private val cleanCartForUserUseCase: CleanCartForUserUseCase
 ) {
 
-    //HTTP response: 204
     @PutMapping("/items/{productId}")
     fun addProductToCart(
         @PathVariable productId: UUID,
@@ -40,7 +39,6 @@ class CartController(
         return ResponseEntity.noContent().build()
     }
 
-    //HTTP response: 200, 404
     @GetMapping
     fun getCartForUser(): ResponseEntity<CartDtoOutbound> {
         val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")
@@ -53,7 +51,6 @@ class CartController(
         return ResponseEntity.ok(outbound)
     }
 
-    //HTTP response: 204
     @DeleteMapping
     fun cleanCartForUser(): ResponseEntity<Unit> {
         val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")

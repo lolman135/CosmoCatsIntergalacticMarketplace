@@ -1,6 +1,6 @@
 package labs.catmarket.mapper
 
-import labs.catmarket.domain.order.Order
+import labs.catmarket.domain.Order
 import labs.catmarket.dto.outbound.OrderDtoOutbound
 import labs.catmarket.dto.outbound.OrderItemDtoOutbound
 import org.mapstruct.Mapper

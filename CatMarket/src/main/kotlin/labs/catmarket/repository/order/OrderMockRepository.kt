@@ -1,7 +1,6 @@
 package labs.catmarket.repository.order
 
-import labs.catmarket.domain.order.Order
-import labs.catmarket.repository.order.OrderRepository
+import labs.catmarket.domain.Order
 import org.springframework.stereotype.Repository
 import java.util.UUID
 

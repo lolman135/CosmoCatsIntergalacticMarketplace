@@ -1,6 +1,6 @@
 package labs.catmarket.repository.category
 
-import labs.catmarket.domain.category.Category
+import labs.catmarket.domain.Category
 import labs.catmarket.repository.BaseRepository
 import java.util.UUID
 

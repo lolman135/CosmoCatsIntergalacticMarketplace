@@ -3,7 +3,7 @@ package labs.catmarket.application.useCase.cart
 import labs.catmarket.application.exception.DomainNotFoundException
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.common.CartStorage
-import labs.catmarket.domain.cart.Cart
+import labs.catmarket.domain.Cart
 import labs.catmarket.repository.product.ProductRepository
 import org.springframework.stereotype.Service
 

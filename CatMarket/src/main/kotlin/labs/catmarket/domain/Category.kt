@@ -1,4 +1,4 @@
-package labs.catmarket.domain.category
+package labs.catmarket.domain
 
 import java.util.UUID
 

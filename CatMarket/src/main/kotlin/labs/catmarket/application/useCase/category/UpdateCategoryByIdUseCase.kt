@@ -1,7 +1,7 @@
 package labs.catmarket.application.useCase.category
 
 import labs.catmarket.application.useCase.UseCase
-import labs.catmarket.domain.category.Category
+import labs.catmarket.domain.Category
 import labs.catmarket.repository.category.CategoryRepository
 import labs.catmarket.application.exception.DomainAlreadyExistsException
 import labs.catmarket.application.exception.DomainNotFoundException

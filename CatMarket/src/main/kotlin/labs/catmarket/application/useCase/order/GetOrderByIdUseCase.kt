@@ -2,7 +2,7 @@ package labs.catmarket.application.useCase.order
 
 import labs.catmarket.application.exception.DomainNotFoundException
 import labs.catmarket.application.useCase.UseCase
-import labs.catmarket.domain.order.Order
+import labs.catmarket.domain.Order
 import labs.catmarket.repository.order.OrderRepository
 import java.util.UUID
 import org.springframework.stereotype.Service

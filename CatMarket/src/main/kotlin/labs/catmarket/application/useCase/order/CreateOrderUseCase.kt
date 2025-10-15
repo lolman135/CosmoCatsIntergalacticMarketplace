@@ -4,7 +4,7 @@ import labs.catmarket.application.exception.CartNotFoundException
 import labs.catmarket.application.exception.DomainNotFoundException
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.common.CartStorage
-import labs.catmarket.domain.order.Order
+import labs.catmarket.domain.Order
 import labs.catmarket.repository.order.OrderRepository
 import labs.catmarket.repository.product.ProductRepository
 import java.util.UUID

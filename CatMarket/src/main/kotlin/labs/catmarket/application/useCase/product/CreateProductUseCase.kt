@@ -3,7 +3,7 @@ package labs.catmarket.application.useCase.product
 import labs.catmarket.application.exception.DomainAlreadyExistsException
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.repository.category.CategoryRepository
-import labs.catmarket.domain.product.Product
+import labs.catmarket.domain.Product
 import labs.catmarket.repository.product.ProductRepository
 import java.util.*
 import org.springframework.stereotype.Service

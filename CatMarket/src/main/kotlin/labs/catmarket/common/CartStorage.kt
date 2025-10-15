@@ -1,6 +1,6 @@
 package labs.catmarket.common
 
-import labs.catmarket.domain.cart.Cart
+import labs.catmarket.domain.Cart
 import org.springframework.stereotype.Component
 import java.util.UUID
 
