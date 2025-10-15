@@ -4,8 +4,8 @@ import labs.catmarket.application.useCase.cart.AddProductCommand
 import labs.catmarket.application.useCase.cart.AddProductToCartUseCase
 import labs.catmarket.application.useCase.cart.CleanCartForUserUseCase
 import labs.catmarket.application.useCase.cart.GetCartByUserIdUseCase
-import labs.catmarket.dto.requet.busines.CartQuantityRequest
-import labs.catmarket.dto.response.CartDtoResponse
+import labs.catmarket.dto.inbound.CartQuantityInbound
+import labs.catmarket.dto.outbound.CartDtoOutbound
 import labs.catmarket.mapper.CartMapper
 import labs.catmarket.mapper.CartMapperHelper
 import org.springframework.http.ResponseEntity
@@ -32,7 +32,7 @@ class CartController(
     @PutMapping("/items/{productId}")
     fun addProductToCart(
         @PathVariable productId: UUID,
-        @RequestBody request: CartQuantityRequest)
+        @RequestBody request: CartQuantityInbound)
     : ResponseEntity<Unit>{
         val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")
         val command = AddProductCommand(mockUserId, productId, request.quantity)
@@ -42,15 +42,15 @@ class CartController(
 
     //HTTP response: 200, 404
     @GetMapping
-    fun getCartForUser(): ResponseEntity<CartDtoResponse> {
+    fun getCartForUser(): ResponseEntity<CartDtoOutbound> {
         val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")
-        val response = CartDtoResponse(
+        val outbound = CartDtoOutbound(
             userId = mockUserId,
             items = getCartByUserIdUseCase.execute(mockUserId).getItems().map {
                 cartMapper.toDto(it, cartMapperHelper)
             }.toList()
         )
-        return ResponseEntity.ok(response)
+        return ResponseEntity.ok(outbound)
     }
 
     //HTTP response: 204

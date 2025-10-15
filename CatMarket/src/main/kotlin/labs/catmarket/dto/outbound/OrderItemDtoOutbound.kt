@@ -1,6 +1,6 @@
-package labs.catmarket.dto.response
+package labs.catmarket.dto.outbound
 
-data class OrderItemDtoResponse(
+data class OrderItemDtoOutbound(
     val productName: String,
     val productPrice: Int,
     val quantity: Int

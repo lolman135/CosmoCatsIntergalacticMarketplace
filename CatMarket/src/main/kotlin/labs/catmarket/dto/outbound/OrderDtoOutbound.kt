@@ -1,11 +1,11 @@
-package labs.catmarket.dto.response
+package labs.catmarket.dto.outbound
 
 import java.time.LocalDateTime
 import java.util.UUID
 
-data class OrderDtoResponse(
+data class OrderDtoOutbound(
     val id: UUID,
     val creationTime: LocalDateTime,
     val totalCost: Int,
-    val items: List<OrderItemDtoResponse>
+    val items: List<OrderItemDtoOutbound>
 )

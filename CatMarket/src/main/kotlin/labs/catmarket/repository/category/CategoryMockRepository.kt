@@ -1,7 +1,7 @@
 package labs.catmarket.repository.category
 
 import labs.catmarket.domain.category.Category
-import labs.catmarket.domain.category.CategoryRepository
+import labs.catmarket.repository.category.CategoryRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID
 

@@ -1,22 +1,23 @@
 package labs.catmarket.common
 
 import labs.catmarket.domain.cart.Cart
-import labs.catmarket.domain.cart.CartStorage
 import org.springframework.stereotype.Component
 import java.util.UUID
 
+
+//first, i dunno where to store this component, so it will lay here
 @Component
-class CartStorageImpl : CartStorage {
+class CartStorage {
 
     private val carts: MutableMap<UUID, Cart> = mutableMapOf()
 
-    override fun findByUserId(id: UUID): Cart? = carts[id]
+    fun findByUserId(id: UUID): Cart? = carts[id]
 
-    override fun upsert(cart: Cart) {
+    fun upsert(cart: Cart) {
         carts[cart.userId] = cart
     }
 
-    override fun deleteByCustomerId(id: UUID) {
+    fun deleteByCustomerId(id: UUID) {
         carts.remove(id)
     }
 }

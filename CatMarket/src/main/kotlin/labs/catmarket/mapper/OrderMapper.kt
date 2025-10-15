@@ -1,8 +1,8 @@
 package labs.catmarket.mapper
 
 import labs.catmarket.domain.order.Order
-import labs.catmarket.dto.response.OrderDtoResponse
-import labs.catmarket.dto.response.OrderItemDtoResponse
+import labs.catmarket.dto.outbound.OrderDtoOutbound
+import labs.catmarket.dto.outbound.OrderItemDtoOutbound
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 
@@ -10,12 +10,12 @@ import org.mapstruct.Mapping
 interface OrderMapper {
 
     @Mapping(source = "orderItems", target = "items")
-    fun toDto(order: Order): OrderDtoResponse
+    fun toDto(order: Order): OrderDtoOutbound
 
-    fun toDtoItems(orderItems: List<Order.OrderItem>): List<OrderItemDtoResponse>
+    fun toDtoItems(orderItems: List<Order.OrderItem>): List<OrderItemDtoOutbound>
 
     @Mapping(source = "productName", target = "productName")
     @Mapping(source = "pricePerUnit", target = "productPrice")
     @Mapping(source = "quantity", target = "quantity")
-    fun toDtoItem(orderItem: Order.OrderItem): OrderItemDtoResponse
+    fun toDtoItem(orderItem: Order.OrderItem): OrderItemDtoOutbound
 }

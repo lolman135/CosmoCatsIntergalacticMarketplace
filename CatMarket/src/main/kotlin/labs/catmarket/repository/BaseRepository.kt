@@ -1,4 +1,4 @@
-package labs.catmarket.domain.baseRepository
+package labs.catmarket.repository
 
 interface BaseRepository<ID, T> {
     fun save(domain: T): T

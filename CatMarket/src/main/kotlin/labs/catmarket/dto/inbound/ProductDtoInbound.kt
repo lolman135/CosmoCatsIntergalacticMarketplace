@@ -1,4 +1,4 @@
-package labs.catmarket.dto.requet.busines
+package labs.catmarket.dto.inbound
 
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size
 import labs.catmarket.validation.Url
 import java.util.UUID
 
-data class ProductDtoRequest(
+data class ProductDtoInbound(
 
     @field:NotBlank(message = "Product name must not be blank")
     @field:Size(max = 100, message = "Product name must be at most 100 characters")

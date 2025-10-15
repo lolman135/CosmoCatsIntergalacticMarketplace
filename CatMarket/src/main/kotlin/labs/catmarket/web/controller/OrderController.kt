@@ -4,7 +4,7 @@ import labs.catmarket.application.useCase.order.CreateOrderUseCase
 import labs.catmarket.application.useCase.order.DeleteOrderByIdUseCase
 import labs.catmarket.application.useCase.order.GetAllOrdersUseCase
 import labs.catmarket.application.useCase.order.GetOrderByIdUseCase
-import labs.catmarket.dto.response.OrderDtoResponse
+import labs.catmarket.dto.outbound.OrderDtoOutbound
 import labs.catmarket.mapper.OrderMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -32,7 +32,7 @@ class OrderController(
     //In the future i'm going to add an ability to register users and store their info in DB and security context,
     //and then, the current user's ID will be taken from the context (token)
     @PostMapping
-    fun createOrder(): ResponseEntity<OrderDtoResponse> {
+    fun createOrder(): ResponseEntity<OrderDtoOutbound> {
         val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")
         val order = createOrderUseCase.execute(mockUserId)
         val location = URI.create("/api/v1/orders/${order.id}")

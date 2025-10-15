@@ -6,8 +6,8 @@ import labs.catmarket.application.useCase.product.DeleteProductByIdUseCase
 import labs.catmarket.application.useCase.product.GetAllProductsUseCase
 import labs.catmarket.application.useCase.product.GetProductByIdUseCase
 import labs.catmarket.application.useCase.product.UpdateProductByIdUseCase
-import labs.catmarket.dto.requet.busines.ProductDtoRequest
-import labs.catmarket.dto.response.ProductDtoResponse
+import labs.catmarket.dto.inbound.ProductDtoInbound
+import labs.catmarket.dto.outbound.ProductDtoOutbound
 import labs.catmarket.mapper.ProductMapper
 import labs.catmarket.mapper.ProductMapperHelper
 import org.springframework.http.ResponseEntity
@@ -37,11 +37,11 @@ class ProductController(
 ) {
 
     @PostMapping
-    fun save(@RequestBody @Valid request: ProductDtoRequest): ResponseEntity<ProductDtoResponse> {
+    fun save(@RequestBody @Valid request: ProductDtoInbound): ResponseEntity<ProductDtoOutbound> {
         val command = productMapper.toCommand(request)
-        val response = productMapper.toDto(createProductUseCase.execute(command), productMapperHelper)
-        val location = URI.create("/api/v1/categories/${response.id}")
-        return ResponseEntity.created(location).body(response)
+        val outbound = productMapper.toDto(createProductUseCase.execute(command), productMapperHelper)
+        val location = URI.create("/api/v1/categories/${outbound.id}")
+        return ResponseEntity.created(location).body(outbound)
     }
 
     @GetMapping
@@ -60,11 +60,11 @@ class ProductController(
     @PutMapping("/{id}")
     fun updateById(
         @PathVariable id: UUID,
-        @RequestBody @Valid request: ProductDtoRequest
-    ): ResponseEntity<ProductDtoResponse> {
+        @RequestBody @Valid request: ProductDtoInbound
+    ): ResponseEntity<ProductDtoOutbound> {
         val pair = id to productMapper.toCommand(request)
-        val response = productMapper.toDto(updateProductByIdUseCase.execute(pair), productMapperHelper)
-        return ResponseEntity.ok(response)
+        val outbound = productMapper.toDto(updateProductByIdUseCase.execute(pair), productMapperHelper)
+        return ResponseEntity.ok(outbound)
     }
 
     @DeleteMapping("/{id}")

@@ -1,8 +1,8 @@
-package labs.catmarket.dto.response
+package labs.catmarket.dto.outbound
 
 import java.util.UUID
 
-data class ProductDtoResponse(
+data class ProductDtoOutbound(
     val id: UUID,
     val name: String,
     val description: String,

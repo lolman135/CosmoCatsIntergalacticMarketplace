@@ -3,12 +3,14 @@ package labs.catmarket.application.useCase.order
 import labs.catmarket.application.exception.CartNotFoundException
 import labs.catmarket.application.exception.DomainNotFoundException
 import labs.catmarket.application.useCase.UseCase
-import labs.catmarket.domain.cart.CartStorage
+import labs.catmarket.common.CartStorage
 import labs.catmarket.domain.order.Order
-import labs.catmarket.domain.order.OrderRepository
-import labs.catmarket.domain.product.ProductRepository
+import labs.catmarket.repository.order.OrderRepository
+import labs.catmarket.repository.product.ProductRepository
 import java.util.UUID
+import org.springframework.stereotype.Service
 
+@Service
 class CreateOrderUseCase(
     private val orderRepository: OrderRepository,
     private val productRepository: ProductRepository,

@@ -2,11 +2,13 @@ package labs.catmarket.application.useCase.product
 
 import labs.catmarket.application.exception.DomainAlreadyExistsException
 import labs.catmarket.application.useCase.UseCase
-import labs.catmarket.domain.category.CategoryRepository
+import labs.catmarket.repository.category.CategoryRepository
 import labs.catmarket.domain.product.Product
-import labs.catmarket.domain.product.ProductRepository
+import labs.catmarket.repository.product.ProductRepository
 import java.util.*
+import org.springframework.stereotype.Service
 
+@Service
 class CreateProductUseCase(
     private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository

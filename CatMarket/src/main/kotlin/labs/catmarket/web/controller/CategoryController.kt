@@ -6,8 +6,8 @@ import labs.catmarket.application.useCase.category.DeleteCategoryByIdUseCase
 import labs.catmarket.application.useCase.category.GetAllCategoriesUseCase
 import labs.catmarket.application.useCase.category.GetCategoryByIdUseCase
 import labs.catmarket.application.useCase.category.UpdateCategoryByIdUseCase
-import labs.catmarket.dto.requet.busines.CategoryDtoRequest
-import labs.catmarket.dto.response.CategoryDtoResponse
+import labs.catmarket.dto.inbound.CategoryDtoInbound
+import labs.catmarket.dto.outbound.CategoryDtoOutbound
 import labs.catmarket.mapper.CategoryMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -35,11 +35,11 @@ class CategoryController(
 ) {
 
     @PostMapping
-    fun save(@RequestBody @Valid request: CategoryDtoRequest): ResponseEntity<CategoryDtoResponse>{
+    fun save(@RequestBody @Valid request: CategoryDtoInbound): ResponseEntity<CategoryDtoOutbound>{
         val command = categoryMapper.toCommand(request)
-        val response = categoryMapper.toDto(createCategoryUseCase.execute(command))
-        val location = URI.create("/api/v1/categories/${response.id}")
-        return ResponseEntity.created(location).body(response)
+        val outbound = categoryMapper.toDto(createCategoryUseCase.execute(command))
+        val location = URI.create("/api/v1/categories/${outbound.id}")
+        return ResponseEntity.created(location).body(outbound)
     }
 
     @GetMapping
@@ -53,11 +53,11 @@ class CategoryController(
     @PutMapping("/{id}")
     fun updateById(
         @PathVariable id: UUID,
-        @RequestBody @Valid request: CategoryDtoRequest
-    ): ResponseEntity<CategoryDtoResponse> {
+        @RequestBody @Valid request: CategoryDtoInbound
+    ): ResponseEntity<CategoryDtoOutbound> {
         val pair = id to categoryMapper.toCommand(request)
-        val response = categoryMapper.toDto(updateCategoryByIdUseCase.execute(pair))
-        return ResponseEntity.ok(response)
+        val outbound = categoryMapper.toDto(updateCategoryByIdUseCase.execute(pair))
+        return ResponseEntity.ok(outbound)
     }
 
     @DeleteMapping("/{id}")
