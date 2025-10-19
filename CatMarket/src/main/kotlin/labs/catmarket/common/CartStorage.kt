@@ -5,7 +5,11 @@ import org.springframework.stereotype.Component
 import java.util.UUID
 
 
-//first, i dunno where to store this component, so it will lay here
+//In my case the storage looks like a repository, but in the future, it will have different logic.
+//Repositories will operate with jpa entities and change data and DB. Storage is going to be
+//an in-memory logic component (or redis, if I will have enough time to integrate it into project,
+//but sounds as good idea).
+//So in that case, it continues to lay here (till next discussion about this topic) :)
 @Component
 class CartStorage {
 
