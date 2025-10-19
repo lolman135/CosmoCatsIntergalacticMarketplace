@@ -1,0 +1,8 @@
+services:
+  catmarket:
+    build:
+      context: CatMarket/.
+    container_name: catmarket-api
+    ports:
+      - '8080:8080'
+    restart: always
