@@ -1,9 +1,9 @@
 package labs.catmarket.web.controller
 
-import labs.catmarket.application.useCase.order.CreateOrderUseCase
-import labs.catmarket.application.useCase.order.DeleteOrderByIdUseCase
-import labs.catmarket.application.useCase.order.GetAllOrdersUseCase
-import labs.catmarket.application.useCase.order.GetOrderByIdUseCase
+import labs.catmarket.usecase.useCase.order.CreateOrderUseCase
+import labs.catmarket.usecase.useCase.order.DeleteOrderByIdUseCase
+import labs.catmarket.usecase.useCase.order.GetAllOrdersUseCase
+import labs.catmarket.usecase.useCase.order.GetOrderByIdUseCase
 import labs.catmarket.dto.outbound.OrderDtoOutbound
 import labs.catmarket.mapper.OrderMapper
 import org.springframework.http.ResponseEntity

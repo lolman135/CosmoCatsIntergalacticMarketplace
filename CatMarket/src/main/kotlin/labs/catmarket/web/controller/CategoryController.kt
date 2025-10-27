@@ -1,11 +1,11 @@
 package labs.catmarket.web.controller
 
 import jakarta.validation.Valid
-import labs.catmarket.application.useCase.category.CreateCategoryUseCase
-import labs.catmarket.application.useCase.category.DeleteCategoryByIdUseCase
-import labs.catmarket.application.useCase.category.GetAllCategoriesUseCase
-import labs.catmarket.application.useCase.category.GetCategoryByIdUseCase
-import labs.catmarket.application.useCase.category.UpdateCategoryByIdUseCase
+import labs.catmarket.usecase.useCase.category.CreateCategoryUseCase
+import labs.catmarket.usecase.useCase.category.DeleteCategoryByIdUseCase
+import labs.catmarket.usecase.useCase.category.GetAllCategoriesUseCase
+import labs.catmarket.usecase.useCase.category.GetCategoryByIdUseCase
+import labs.catmarket.usecase.useCase.category.UpdateCategoryByIdUseCase
 import labs.catmarket.dto.inbound.CategoryDtoInbound
 import labs.catmarket.dto.outbound.CategoryDtoOutbound
 import labs.catmarket.mapper.CategoryMapper

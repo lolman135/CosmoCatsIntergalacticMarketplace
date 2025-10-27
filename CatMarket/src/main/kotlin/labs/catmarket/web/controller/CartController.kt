@@ -1,9 +1,9 @@
 package labs.catmarket.web.controller
 
-import labs.catmarket.application.useCase.cart.AddProductCommand
-import labs.catmarket.application.useCase.cart.AddProductToCartUseCase
-import labs.catmarket.application.useCase.cart.CleanCartForUserUseCase
-import labs.catmarket.application.useCase.cart.GetCartByUserIdUseCase
+import labs.catmarket.usecase.useCase.cart.AddProductCommand
+import labs.catmarket.usecase.useCase.cart.AddProductToCartUseCase
+import labs.catmarket.usecase.useCase.cart.CleanCartForUserUseCase
+import labs.catmarket.usecase.useCase.cart.GetCartByUserIdUseCase
 import labs.catmarket.dto.inbound.CartQuantityInbound
 import labs.catmarket.dto.outbound.CartDtoOutbound
 import labs.catmarket.mapper.CartMapper

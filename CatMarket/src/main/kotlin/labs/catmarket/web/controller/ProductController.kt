@@ -1,11 +1,11 @@
 package labs.catmarket.web.controller
 
 import jakarta.validation.Valid
-import labs.catmarket.application.useCase.product.CreateProductUseCase
-import labs.catmarket.application.useCase.product.DeleteProductByIdUseCase
-import labs.catmarket.application.useCase.product.GetAllProductsUseCase
-import labs.catmarket.application.useCase.product.GetProductByIdUseCase
-import labs.catmarket.application.useCase.product.UpdateProductByIdUseCase
+import labs.catmarket.usecase.useCase.product.CreateProductUseCase
+import labs.catmarket.usecase.useCase.product.DeleteProductByIdUseCase
+import labs.catmarket.usecase.useCase.product.GetAllProductsUseCase
+import labs.catmarket.usecase.useCase.product.GetProductByIdUseCase
+import labs.catmarket.usecase.useCase.product.UpdateProductByIdUseCase
 import labs.catmarket.dto.inbound.ProductDtoInbound
 import labs.catmarket.dto.outbound.ProductDtoOutbound
 import labs.catmarket.mapper.ProductMapper

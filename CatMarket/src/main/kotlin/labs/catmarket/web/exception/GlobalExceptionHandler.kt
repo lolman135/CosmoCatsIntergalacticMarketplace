@@ -1,9 +1,9 @@
 package labs.catmarket.web.exception
 
 import jakarta.servlet.http.HttpServletRequest
-import labs.catmarket.application.exception.CartNotFoundException
-import labs.catmarket.application.exception.DomainAlreadyExistsException
-import labs.catmarket.application.exception.DomainNotFoundException
+import labs.catmarket.usecase.exception.CartNotFoundException
+import labs.catmarket.usecase.exception.DomainAlreadyExistsException
+import labs.catmarket.usecase.exception.DomainNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus

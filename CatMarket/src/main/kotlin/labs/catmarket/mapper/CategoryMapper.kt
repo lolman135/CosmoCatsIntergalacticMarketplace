@@ -1,6 +1,6 @@
 package labs.catmarket.mapper
 
-import labs.catmarket.application.useCase.category.UpsertCategoryCommand
+import labs.catmarket.usecase.useCase.category.UpsertCategoryCommand
 import labs.catmarket.domain.Category
 import labs.catmarket.dto.inbound.CategoryDtoInbound
 import labs.catmarket.dto.outbound.CategoryDtoOutbound

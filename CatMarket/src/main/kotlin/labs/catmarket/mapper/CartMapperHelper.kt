@@ -1,6 +1,6 @@
 package labs.catmarket.mapper
 
-import labs.catmarket.application.useCase.product.GetProductByIdUseCase
+import labs.catmarket.usecase.useCase.product.GetProductByIdUseCase
 import org.springframework.stereotype.Component
 import java.util.UUID
 
