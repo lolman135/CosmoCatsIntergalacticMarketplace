@@ -11,7 +11,7 @@ COPY src src
 
 RUN ./gradlew clean build -x test
 
-FROM openjdk:21-jdk-slim
+FROM gcr.io/distroless/java21-debian12
 
 WORKDIR /app
 
@@ -19,4 +19,4 @@ COPY --from=build /app/build/libs/*.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]

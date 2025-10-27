@@ -59,4 +59,8 @@ class ProductMockRepository : ProductRepository{
 
     override fun existsByName(name: String) =
         productHolder.values.any { it.name.equals(name, ignoreCase = true) }
+
+    override fun deleteAll() {
+        productHolder.clear()
+    }
 }
