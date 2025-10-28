@@ -16,6 +16,14 @@ java {
     }
 }
 
+extra["filesExcludedFromCoverage"] = listOf(
+    "**/config/**",
+    "**/*Application.kt",
+    "**/exception/**",
+)
+
+extra["minimumCoveragePerFile"] = 0.8
+
 sourceSets {
     main {
         resources {
@@ -28,6 +36,8 @@ repositories {
     mavenCentral()
 }
 
+apply(from = rootProject.file("gradle/jacoco.gradle"))
+apply(from = rootProject.file("gradle/test.gradle"))
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")

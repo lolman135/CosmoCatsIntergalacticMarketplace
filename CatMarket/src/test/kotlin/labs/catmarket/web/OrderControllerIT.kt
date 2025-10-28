@@ -31,7 +31,7 @@ class OrderControllerIT @Autowired constructor(
 
     //POST
     @Test
-    fun createOrderShouldReturnCreated_whenCartHasItems() {
+    fun createOrderShouldReturnCreatedWhenCartHasItems() {
         val productId = anySeedProductId()
         addItemToCart(productId, 2)
 
@@ -50,7 +50,7 @@ class OrderControllerIT @Autowired constructor(
 
     //GET
     @Test
-    fun getAllOrdersShouldReturnOk_andList() {
+    fun getAllOrdersShouldReturnOkAndList() {
         val productId = anySeedProductId()
         addItemToCart(productId, 1)
         createOrderViaApi()
@@ -65,7 +65,7 @@ class OrderControllerIT @Autowired constructor(
     }
 
     @Test
-    fun getByIdShouldReturnOk_whenExists() {
+    fun getByIdShouldReturnOkWhenExists() {
         val productId = anySeedProductId()
         addItemToCart(productId, 3)
         val id = createOrderViaApi()
@@ -81,7 +81,7 @@ class OrderControllerIT @Autowired constructor(
     }
 
     @Test
-    fun getByIdShouldReturnNotFound_whenMissing() {
+    fun getByIdShouldReturnNotFoundWhenMissing() {
         mockMvc.get("/api/v1/orders/${UUID.randomUUID()}") {
             accept = MediaType.APPLICATION_JSON
         }.andExpect {
@@ -94,7 +94,7 @@ class OrderControllerIT @Autowired constructor(
 
     //DELETE
     @Test
-    fun deleteShouldReturnNoContent_whenExists() {
+    fun deleteShouldReturnNoContentWhenExists() {
         val productId = anySeedProductId()
         addItemToCart(productId, 1)
         val id = createOrderViaApi()

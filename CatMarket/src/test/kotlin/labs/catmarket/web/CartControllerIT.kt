@@ -32,7 +32,7 @@ class CartControllerIT @Autowired constructor(
 
     //POST
     @Test
-    fun addProductToCart_returnsNoContent() {
+    fun addProductToCartShouldReturnsNoContent() {
         val productId = anySeedProductId()
         val request = CartQuantityInbound(quantity = 1)
 
@@ -45,7 +45,7 @@ class CartControllerIT @Autowired constructor(
     }
 
     @Test
-    fun addProductToCart_returnsBadRequest() {
+    fun addProductToCartShouldReturnsBadRequest() {
         val productId = anySeedProductId()
         val request = CartQuantityInbound(quantity = 0)
 
@@ -62,7 +62,7 @@ class CartControllerIT @Autowired constructor(
 
     //GET
     @Test
-    fun getCartForUser_afterAddingItem_returnsOk() {
+    fun getCartForUserShouldReturnOkafterAddingItem() {
         val productId = anySeedProductId()
         val request = CartQuantityInbound(quantity = 2)
 
@@ -82,7 +82,7 @@ class CartControllerIT @Autowired constructor(
 
     //DELETE
     @Test
-    fun cleanCartForUser_thenGet_returnsNoContent_thenOk() {
+    fun cleanCartForUserShouldreturnsNoContenThenOk() {
         val productId = anySeedProductId()
         val request = CartQuantityInbound(quantity = 1)
         mockMvc.put("/api/v1/carts/items/$productId") {

@@ -1,6 +1,7 @@
 package labs.catmarket.application.useCase.order
 
 import labs.catmarket.application.exception.CartNotFoundException
+import labs.catmarket.application.exception.DomainAlreadyExistsException
 import labs.catmarket.application.exception.DomainNotFoundException
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.common.CartStorage
@@ -33,6 +34,10 @@ class CreateOrderUseCase(
         }.toList()
 
         val order = Order(id = UUID.randomUUID(), orderItems = orderItems)
+
+        if (orderRepository.existsById(order.id!!))
+            throw DomainAlreadyExistsException("This Order is already exists")
+
         cart.clear()
         return orderRepository.save(order)
     }

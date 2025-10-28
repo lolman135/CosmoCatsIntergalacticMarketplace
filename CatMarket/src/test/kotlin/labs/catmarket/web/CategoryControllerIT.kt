@@ -47,7 +47,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
-    fun saveShouldReturnBadRequest_whenNameBlank() {
+    fun saveShouldReturnBadRequestWhenNameBlank() {
         val inbound = CategoryDtoInbound(name = "   ")
 
         mockMvc.post("/api/v1/categories") {
@@ -62,7 +62,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
-    fun saveShouldReturnBadRequest_whenNameTooLong() {
+    fun saveShouldReturnBadRequestWhenNameTooLong() {
         val inbound = CategoryDtoInbound(name = "a".repeat(101))
 
         mockMvc.post("/api/v1/categories") {
@@ -78,7 +78,7 @@ class CategoryControllerIT @Autowired constructor(
 
     //GET
     @Test
-    fun getAllShouldReturnOk_andList() {
+    fun getAllShouldReturnOkAndList() {
         categoryRepository.save(Category(id = UUID.randomUUID(), name = "One"))
         categoryRepository.save(Category(id = UUID.randomUUID(), name = "Two"))
 
@@ -93,7 +93,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
-    fun getByIdShouldReturnOk_whenExists() {
+    fun getByIdShouldReturnOkWhenExists() {
         val existedId = getExistsCategoryId()
 
         mockMvc.get("/api/v1/categories/${existedId}") {
@@ -107,7 +107,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
-    fun getByIdShouldReturnNotFound_whenMissing() {
+    fun getByIdShouldReturnNotFoundWhenMissing() {
         val missingId = UUID.randomUUID()
 
         mockMvc.get("/api/v1/categories/${missingId}") {
@@ -139,7 +139,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
-    fun updateShouldReturnBadRequest_whenBodyInvalid() {
+    fun updateShouldReturnBadRequestWhenBodyInvalid() {
         val invalid = CategoryDtoInbound(name = "")
 
         mockMvc.put("/api/v1/categories/${UUID.randomUUID()}") {
@@ -154,7 +154,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
-    fun updateShouldReturnBadRequest_whenNameToLong() {
+    fun updateShouldReturnBadRequestWhenNameToLong() {
         val invalid = CategoryDtoInbound(name = "a".repeat(101))
 
         mockMvc.put("/api/v1/categories/${UUID.randomUUID()}") {
@@ -170,7 +170,7 @@ class CategoryControllerIT @Autowired constructor(
 
     //DELETE
     @Test
-    fun deleteShouldReturnNoContent_whenExists() {
+    fun deleteShouldReturnNoContentWhenExists() {
         val existedId = getExistsCategoryId()
 
         mockMvc.delete("/api/v1/categories/${existedId}")
