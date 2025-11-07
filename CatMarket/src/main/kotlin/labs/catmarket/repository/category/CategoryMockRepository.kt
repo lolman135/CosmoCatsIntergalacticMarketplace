@@ -42,4 +42,7 @@ class CategoryMockRepository : CategoryRepository {
     override fun existsByName(name: String) =
         categoryHolder.values.any { it.name.equals(name, ignoreCase = true)}
 
+    override fun deleteAll() {
+        categoryHolder.clear();
+    }
 }

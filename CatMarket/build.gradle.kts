@@ -16,6 +16,14 @@ java {
     }
 }
 
+extra["filesExcludedFromCoverage"] = listOf(
+    "**/config/**",
+    "**/*Application.kt",
+    "**/exception/**",
+)
+
+extra["minimumCoveragePerFile"] = 0.8
+
 sourceSets {
     main {
         resources {
@@ -27,6 +35,9 @@ sourceSets {
 repositories {
     mavenCentral()
 }
+
+apply(from = rootProject.file("gradle/jacoco.gradle"))
+apply(from = rootProject.file("gradle/test.gradle"))
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -46,8 +57,9 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("org.mockito:mockito-core:5.18.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
 }
 
 kotlin {

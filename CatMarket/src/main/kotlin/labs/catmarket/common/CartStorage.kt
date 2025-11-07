@@ -20,8 +20,4 @@ class CartStorage {
     fun upsert(cart: Cart) {
         carts[cart.userId] = cart
     }
-
-    fun deleteByCustomerId(id: UUID) {
-        carts.remove(id)
-    }
 }

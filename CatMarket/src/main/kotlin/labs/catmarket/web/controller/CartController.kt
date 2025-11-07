@@ -1,5 +1,6 @@
 package labs.catmarket.web.controller
 
+import jakarta.validation.Valid
 import labs.catmarket.application.useCase.cart.AddProductCommand
 import labs.catmarket.application.useCase.cart.AddProductToCartUseCase
 import labs.catmarket.application.useCase.cart.CleanCartForUserUseCase
@@ -9,6 +10,7 @@ import labs.catmarket.dto.outbound.CartDtoOutbound
 import labs.catmarket.mapper.CartMapper
 import labs.catmarket.mapper.CartMapperHelper
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -20,6 +22,7 @@ import java.util.UUID
 
 @RestController
 @RequestMapping("/api/v1/carts")
+@Validated
 class CartController(
     private val cartMapper: CartMapper,
     private val cartMapperHelper: CartMapperHelper,
@@ -31,7 +34,7 @@ class CartController(
     @PutMapping("/items/{productId}")
     fun addProductToCart(
         @PathVariable productId: UUID,
-        @RequestBody request: CartQuantityInbound)
+        @RequestBody @Valid request: CartQuantityInbound)
     : ResponseEntity<Unit>{
         val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")
         val command = AddProductCommand(mockUserId, productId, request.quantity)

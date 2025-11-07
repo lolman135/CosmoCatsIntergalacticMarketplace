@@ -23,4 +23,8 @@ class OrderMockRepository : OrderRepository {
     override fun findById(id: UUID) = orderHolder[id]
 
     override fun existsById(id: UUID) = orderHolder.contains(id)
+
+    override fun deleteAll() {
+        orderHolder.clear()
+    }
 }
