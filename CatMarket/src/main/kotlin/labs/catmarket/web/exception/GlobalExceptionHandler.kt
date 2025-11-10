@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest
 import labs.catmarket.application.exception.CartNotFoundException
 import labs.catmarket.application.exception.DomainAlreadyExistsException
 import labs.catmarket.application.exception.DomainNotFoundException
+import labs.catmarket.featuretoggle.exception.FeatureToggleNotEnabledException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -34,6 +35,16 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(CartNotFoundException::class)
     fun handleCartNotFoundException(ex: CartNotFoundException, request: HttpServletRequest): ProblemDetail {
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message)
+        problem.title = "Not Found"
+        problem.type = URI.create("https://example.com/errors/not-found")
+        problem.instance = URI.create(request.requestURI)
+        log.warn(ex.message)
+        return problem
+    }
+
+    @ExceptionHandler(FeatureToggleNotEnabledException::class)
+    fun handleFeatureToggleNotEnableException(ex: FeatureToggleNotEnabledException, request: HttpServletRequest): ProblemDetail {
         val problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message)
         problem.title = "Not Found"
         problem.type = URI.create("https://example.com/errors/not-found")

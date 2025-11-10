@@ -4,6 +4,8 @@ spring:
   docker:
     compose:
       enabled: false
+  profiles:
+    active: feature
 springdoc:
   api-docs:
     enabled: true
