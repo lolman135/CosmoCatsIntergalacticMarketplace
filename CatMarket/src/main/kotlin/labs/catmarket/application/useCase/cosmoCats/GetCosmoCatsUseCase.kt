@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 class GetCosmoCatsUseCase : UseCase<Unit, String>{
 
     override fun execute(command: Unit): String {
-        return   "^   ^\n" +
+        return  " ^   ^\n" +
                 "( •_• )"
     }
 }
