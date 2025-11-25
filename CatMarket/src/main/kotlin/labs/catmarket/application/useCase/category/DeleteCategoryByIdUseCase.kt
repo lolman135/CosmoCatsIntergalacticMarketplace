@@ -1,7 +1,7 @@
 package labs.catmarket.application.useCase.category
 
 import labs.catmarket.application.useCase.UseCase
-import labs.catmarket.repository.category.CategoryRepository
+import labs.catmarket.repository.domainrepository.category.CategoryRepository
 import java.util.UUID
 import org.springframework.stereotype.Service
 

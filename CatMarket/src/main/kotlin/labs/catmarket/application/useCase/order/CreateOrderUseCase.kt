@@ -6,8 +6,8 @@ import labs.catmarket.application.exception.DomainNotFoundException
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.common.CartStorage
 import labs.catmarket.domain.Order
-import labs.catmarket.repository.order.OrderRepository
-import labs.catmarket.repository.product.ProductRepository
+import labs.catmarket.repository.domainrepository.order.OrderRepository
+import labs.catmarket.repository.domainrepository.product.ProductRepository
 import java.util.UUID
 import org.springframework.stereotype.Service
 
@@ -29,7 +29,6 @@ class CreateOrderUseCase(
                 it.productId,
                 it.quantity,
                 product.price,
-                product.name
             )
         }.toList()
 

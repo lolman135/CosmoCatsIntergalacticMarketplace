@@ -1,4 +1,4 @@
-package labs.catmarket.repository.product
+package labs.catmarket.repository.domainrepository.product
 
 import labs.catmarket.domain.Product
 import labs.catmarket.repository.BaseRepository

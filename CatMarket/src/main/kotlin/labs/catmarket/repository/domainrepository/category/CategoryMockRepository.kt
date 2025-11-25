@@ -1,4 +1,4 @@
-package labs.catmarket.repository.category
+package labs.catmarket.repository.domainrepository.category
 
 import labs.catmarket.domain.Category
 import org.springframework.stereotype.Repository

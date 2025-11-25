@@ -1,7 +1,7 @@
 package labs.catmarket.application.category
 
 import labs.catmarket.application.useCase.category.DeleteCategoryByIdUseCase
-import labs.catmarket.repository.category.CategoryRepository
+import labs.catmarket.repository.domainrepository.category.CategoryRepository
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

@@ -8,26 +8,8 @@ import java.util.UUID
 
 class OrderTest {
 
-    private fun item(price: Int, qty: Int, name: String = "Item") =
-        Order.OrderItem(UUID.randomUUID(), qty, price, name)
-
-    @Test
-    fun shouldCalculateTotalCostForMultipleItems() {
-        val order = Order(
-            id = null,
-            orderItems = listOf(item(100, 2), item(50, 3))
-        )
-        assertEquals(350, order.totalCost)
-    }
-
-    @Test
-    fun shouldHaveZeroTotalCostForEmptyOrder() {
-        val order = Order(
-            id = null,
-            orderItems = emptyList()
-        )
-        assertEquals(0, order.totalCost)
-    }
+    private fun item(price: Int, qty: Int) =
+        Order.OrderItem(UUID.randomUUID(), qty, price)
 
     @Test
     fun shouldMarkAsPaidFromNewAndKeepOtherFields() {

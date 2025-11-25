@@ -9,14 +9,15 @@ data class Order(
     val status: Status = Status.NEW,
     val orderItems: List<OrderItem>
 ) {
-    val totalCost: Int
-        get() = orderItems.sumOf { it.pricePerUnit * it.quantity }
 
     data class OrderItem(
         val productId: UUID,
         val quantity: Int,
+        // Let me explain. I've decided to live this field both in domain model and in db.
+        // This is because price of product can change along the lifecycle of this product,
+        // but product contains information about purchase at the moment of the purchasing.
+        // So order is just a record, contract or that tell us when it was made
         val pricePerUnit: Int,
-        val productName: String
     )
 
     fun markAsPaid(): Order {

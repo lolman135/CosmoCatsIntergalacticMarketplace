@@ -3,7 +3,7 @@ package labs.catmarket.web
 import com.fasterxml.jackson.databind.ObjectMapper
 import labs.catmarket.AbstractIT
 import labs.catmarket.dto.inbound.CartQuantityInbound
-import labs.catmarket.repository.product.ProductRepository
+import labs.catmarket.repository.domainrepository.product.ProductRepository
 import org.hamcrest.Matchers.containsString
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.DisplayName

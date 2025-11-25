@@ -3,7 +3,7 @@ package labs.catmarket.application.category
 import labs.catmarket.application.exception.DomainNotFoundException
 import labs.catmarket.application.useCase.category.GetCategoryByIdUseCase
 import labs.catmarket.domain.Category
-import labs.catmarket.repository.category.CategoryRepository
+import labs.catmarket.repository.domainrepository.category.CategoryRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

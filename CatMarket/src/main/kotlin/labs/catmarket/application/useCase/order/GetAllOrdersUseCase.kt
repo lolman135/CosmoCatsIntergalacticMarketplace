@@ -2,7 +2,7 @@ package labs.catmarket.application.useCase.order
 
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.domain.Order
-import labs.catmarket.repository.order.OrderRepository
+import labs.catmarket.repository.domainrepository.order.OrderRepository
 import org.springframework.stereotype.Service
 
 @Service

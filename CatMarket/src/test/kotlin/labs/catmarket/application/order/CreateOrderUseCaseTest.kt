@@ -6,8 +6,8 @@ import labs.catmarket.application.useCase.order.CreateOrderUseCase
 import labs.catmarket.common.CartStorage
 import labs.catmarket.domain.Cart
 import labs.catmarket.domain.Product
-import labs.catmarket.repository.order.OrderRepository
-import labs.catmarket.repository.product.ProductRepository
+import labs.catmarket.repository.domainrepository.order.OrderRepository
+import labs.catmarket.repository.domainrepository.product.ProductRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -64,7 +64,6 @@ class CreateOrderUseCaseTest {
         assertEquals(productId, item.productId)
         assertEquals(2, item.quantity)
         assertEquals(product.price, item.pricePerUnit)
-        assertEquals(product.name, item.productName)
 
         verify(cart).clear()
         verify(orderRepository).save(any())

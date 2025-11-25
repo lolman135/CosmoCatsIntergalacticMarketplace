@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import labs.catmarket.AbstractIT
 import labs.catmarket.dto.inbound.CartQuantityInbound
-import labs.catmarket.repository.order.OrderRepository
-import labs.catmarket.repository.product.ProductRepository
+import labs.catmarket.repository.domainrepository.order.OrderRepository
+import labs.catmarket.repository.domainrepository.product.ProductRepository
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.greaterThan
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -42,7 +42,6 @@ class OrderControllerIT @Autowired constructor(
                 content { contentTypeCompatibleWith("application/json") }
                 jsonPath("$.id") { exists() }
                 jsonPath("$.creationTime") { exists() }
-                jsonPath("$.totalCost") { value(greaterThan(0)) }
                 jsonPath("$.items") { isArray() }
                 jsonPath("$.items.length()") { value(greaterThan(0)) }
             }
