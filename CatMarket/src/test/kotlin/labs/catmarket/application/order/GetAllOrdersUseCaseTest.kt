@@ -2,7 +2,7 @@ package labs.catmarket.application.order
 
 import labs.catmarket.application.useCase.order.GetAllOrdersUseCase
 import labs.catmarket.domain.Order
-import labs.catmarket.repository.domainrepository.order.OrderRepository
+import labs.catmarket.repository.domainImpl.order.OrderRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -29,12 +29,12 @@ class GetAllOrdersUseCaseTest {
         val o1 = Order(
             id = UUID.randomUUID(),
             creationTime = LocalDateTime.now(),
-            orderItems = listOf()
+            ordersItems = listOf()
         )
         val o2 = Order(
             id = UUID.randomUUID(),
             creationTime = LocalDateTime.now(),
-            orderItems = listOf()
+            ordersItems = listOf()
         )
 
         whenever(orderRepository.findAll()).thenReturn(listOf(o1, o2))

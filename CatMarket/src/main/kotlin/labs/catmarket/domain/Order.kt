@@ -7,10 +7,10 @@ data class Order(
     val id: UUID?,
     val creationTime: LocalDateTime = LocalDateTime.now(),
     val status: Status = Status.NEW,
-    val orderItems: List<OrderItem>
+    val ordersItems: List<OrdersItem>
 ) {
 
-    data class OrderItem(
+    data class OrdersItem(
         val productId: UUID,
         val quantity: Int,
         // Let me explain. I've decided to live this field both in domain model and in db.

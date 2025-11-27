@@ -1,7 +1,7 @@
 package labs.catmarket.application.product
 
 import labs.catmarket.application.useCase.product.DeleteProductByIdUseCase
-import labs.catmarket.repository.domainrepository.product.ProductRepository
+import labs.catmarket.repository.domainImpl.product.ProductRepository
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

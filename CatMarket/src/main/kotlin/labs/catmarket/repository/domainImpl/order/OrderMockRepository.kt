@@ -1,4 +1,4 @@
-package labs.catmarket.repository.domainrepository.order
+package labs.catmarket.repository.domainImpl.order
 
 import labs.catmarket.domain.Order
 import org.springframework.stereotype.Repository

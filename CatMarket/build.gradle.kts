@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
     kotlin("kapt") version "1.9.0"
+    kotlin("plugin.jpa") version "1.9.25"
     id("org.springframework.boot") version "3.5.6"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -24,6 +25,9 @@ extra["filesExcludedFromCoverage"] = listOf(
 
 extra["minimumCoveragePerFile"] = 0.8
 
+apply(from = rootProject.file("gradle/jacoco.gradle"))
+apply(from = rootProject.file("gradle/test.gradle"))
+
 sourceSets {
     main {
         resources {
@@ -35,9 +39,6 @@ sourceSets {
 repositories {
     mavenCentral()
 }
-
-apply(from = rootProject.file("gradle/jacoco.gradle"))
-apply(from = rootProject.file("gradle/test.gradle"))
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")

@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import labs.catmarket.AbstractIT
 import labs.catmarket.domain.Category
 import labs.catmarket.dto.inbound.ProductDtoInbound
-import labs.catmarket.repository.domainrepository.category.CategoryRepository
-import labs.catmarket.repository.domainrepository.product.ProductRepository
+import labs.catmarket.repository.domainImpl.category.CategoryRepository
+import labs.catmarket.repository.domainImpl.product.ProductRepository
 import org.hamcrest.Matchers.containsString
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName

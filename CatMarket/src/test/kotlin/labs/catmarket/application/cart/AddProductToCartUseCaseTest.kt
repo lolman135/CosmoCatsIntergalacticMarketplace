@@ -5,7 +5,7 @@ import labs.catmarket.application.useCase.cart.AddProductCommand
 import labs.catmarket.application.useCase.cart.AddProductToCartUseCase
 import labs.catmarket.common.CartStorage
 import labs.catmarket.domain.Cart
-import labs.catmarket.repository.domainrepository.product.ProductRepository
+import labs.catmarket.repository.domainImpl.product.ProductRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

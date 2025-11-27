@@ -6,8 +6,8 @@ import labs.catmarket.application.exception.DomainNotFoundException
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.common.CartStorage
 import labs.catmarket.domain.Order
-import labs.catmarket.repository.domainrepository.order.OrderRepository
-import labs.catmarket.repository.domainrepository.product.ProductRepository
+import labs.catmarket.repository.domainImpl.order.OrderRepository
+import labs.catmarket.repository.domainImpl.product.ProductRepository
 import java.util.UUID
 import org.springframework.stereotype.Service
 
@@ -21,18 +21,18 @@ class CreateOrderUseCase(
     override fun execute(userId: UUID): Order {
         val cart = cartStorage.findByUserId(userId) ?: throw CartNotFoundException()
 
-        val orderItems = cart.getItems().map {
+        val ordersItems = cart.getItems().map {
             val product = productRepository.findById(it.productId)
                 ?: throw DomainNotFoundException("Product", it.productId)
 
-            Order.OrderItem(
+            Order.OrdersItem(
                 it.productId,
                 it.quantity,
                 product.price,
             )
         }.toList()
 
-        val order = Order(id = UUID.randomUUID(), orderItems = orderItems)
+        val order = Order(id = UUID.randomUUID(), ordersItems = ordersItems)
 
         if (orderRepository.existsById(order.id!!))
             throw DomainAlreadyExistsException("This Order is already exists")
