@@ -11,7 +11,6 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.SequenceGenerator
 import jakarta.persistence.Table
-import labs.catmarket.domain.Order
 
 @Entity
 @Table(name = "orders_items")
@@ -29,8 +28,4 @@ class OrdersItemEntity(
     @get:Column(name = "price_per_unit")
     var pricePerUnit: Int,
     var quantity: Int,
-
-    @get:ManyToOne(fetch = FetchType.LAZY)
-    @get:JoinColumn(name = "order_id", referencedColumnName = "id")
-    var order: OrderEntity
 )
