@@ -28,4 +28,8 @@ class OrdersItemEntity(
     @get:Column(name = "price_per_unit")
     var pricePerUnit: Int,
     var quantity: Int,
+
+    @get:ManyToOne(fetch = FetchType.LAZY)
+    @get:JoinColumn(name = "order_id", referencedColumnName = "id")
+    var order: OrderEntity
 )

@@ -15,8 +15,16 @@ class CategoryRepositoryImpl(
     override fun existsByName(name: String) = categoryJpaRepository.existsCategoryEntityByName(name)
 
     override fun save(domain: Category): Category {
-        val categoryEntity = categoryMapper.toEntityFromDomain(domain)
-        return categoryMapper.toDomainFromEntity(categoryJpaRepository.save(categoryEntity))
+        val entity = categoryJpaRepository.findByNaturalId(domain.id!!)
+            .orElse(null)
+
+        return if (entity == null) {
+            val newEntity = categoryMapper.toEntityFromDomain(domain)
+            categoryMapper.toDomainFromEntity(categoryJpaRepository.save(newEntity))
+        } else {
+            entity.name = domain.name
+            categoryMapper.toDomainFromEntity(entity)
+        }
     }
 
     override fun findAll() = categoryJpaRepository.findAll().map { categoryMapper.toDomainFromEntity(it) }

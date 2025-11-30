@@ -1,6 +1,7 @@
 package labs.catmarket.repository.impl
 
 import jakarta.persistence.EntityManager
+import jakarta.transaction.Transactional
 import labs.catmarket.repository.NaturalIdRepository
 import org.hibernate.Session
 import org.springframework.data.jpa.repository.support.JpaEntityInformation
@@ -20,6 +21,7 @@ class NaturalIdRepositoryImpl<T, ID : Serializable>(
             .loadOptional(naturalId)
     }
 
+    @Transactional
     override fun deleteByNaturalId(naturalId: ID) {
         findByNaturalId(naturalId).ifPresent(this::delete)
     }

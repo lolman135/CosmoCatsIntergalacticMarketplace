@@ -15,6 +15,7 @@ interface CategoryMapper {
     fun toDto(domain: Category): CategoryDtoOutbound
     fun toDtoList(domains: List<Category>): List<CategoryDtoOutbound>
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(source = "id", target = "businessId")
     @Mapping(source = "name", target = "name")
     fun toEntityFromDomain(domain: Category): CategoryEntity

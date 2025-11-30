@@ -36,8 +36,8 @@ class OrderEntity(
     @get:Enumerated(EnumType.STRING)
     var status: Status,
 
-    @OneToMany(mappedBy = "order", cascade = [CascadeType.PERSIST], orphanRemoval = true, fetch = FetchType.LAZY)
-    var items: MutableList<OrdersItemEntity>? = mutableListOf()
+    @get:OneToMany(mappedBy = "order", cascade = [CascadeType.PERSIST], orphanRemoval = true, fetch = FetchType.LAZY)
+    var items: MutableList<OrdersItemEntity> = mutableListOf()
 )
 {
     // See CategoryEntity.kt explanations

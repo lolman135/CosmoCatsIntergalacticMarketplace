@@ -6,10 +6,12 @@ import labs.catmarket.repository.domainImpl.category.CategoryRepository
 import labs.catmarket.application.exception.DomainNotFoundException
 import java.util.UUID
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class GetCategoryByIdUseCase(private val categoryRepository: CategoryRepository) : UseCase<UUID, Category> {
 
+    @Transactional(readOnly = true)
     override fun execute(id: UUID) = categoryRepository.findById(id)
         ?: throw DomainNotFoundException("Category", id)
 

@@ -24,18 +24,28 @@ class CustomOrderEntityMapperImpl(private val productJpaRepository: ProductJpaRe
         } ?: emptyList()
     )
 
-    override fun toEntityFromDomain(domain: Order) =  OrderEntity(
-        businessId = domain.id!!,
-        createdAt = domain.creationTime,
-        status = domain.status,
-        items = domain.ordersItems.map {
+    override fun toEntityFromDomain(domain: Order): OrderEntity {
+        val orderEntity = OrderEntity(
+            businessId = domain.id!!,
+            createdAt = domain.creationTime,
+            status = domain.status,
+            items = mutableListOf()
+        )
+
+        val items = domain.ordersItems.map { item ->
             OrdersItemEntity(
-                product = productJpaRepository.findById(it.productId).orElseThrow {
-                    JpaEntityNotFoundException("Product", it.productId) },
-                pricePerUnit = it.pricePerUnit,
-                quantity = it.quantity
+                product = productJpaRepository.findByNaturalId(item.productId).orElseThrow {
+                    JpaEntityNotFoundException("Product", item.productId)
+                },
+                pricePerUnit = item.pricePerUnit,
+                quantity = item.quantity,
+                order = orderEntity
             )
         }.toMutableList()
-    )
+
+        orderEntity.items = items
+
+        return orderEntity
+    }
 
 }
