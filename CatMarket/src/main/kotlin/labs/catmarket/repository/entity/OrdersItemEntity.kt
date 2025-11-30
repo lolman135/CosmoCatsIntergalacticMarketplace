@@ -21,7 +21,7 @@ class OrdersItemEntity(
     @get:SequenceGenerator(name = "orders_items_id_seq", sequenceName = "orders_items_id_seq", allocationSize = 50)
     var id: Long? = null,
 
-    @get:ManyToOne(cascade = [CascadeType.PERSIST])
+    @get:ManyToOne
     @get:JoinColumn(name = "product_id", referencedColumnName = "id")
     var product: ProductEntity,
 

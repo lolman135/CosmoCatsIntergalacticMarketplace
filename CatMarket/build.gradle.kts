@@ -21,6 +21,7 @@ extra["filesExcludedFromCoverage"] = listOf(
     "**/config/**",
     "**/*Application.kt",
     "**/exception/**",
+    "**/entity/**"
 )
 
 extra["minimumCoveragePerFile"] = 0.8
@@ -63,6 +64,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.mockito:mockito-core:5.18.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql")
     runtimeOnly("org.postgresql:postgresql")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

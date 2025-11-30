@@ -6,6 +6,7 @@ import labs.catmarket.mapper.ProductMapperHelper
 import labs.catmarket.repository.CategoryJpaRepository
 import labs.catmarket.repository.ProductJpaRepository
 import labs.catmarket.repository.exception.JpaEntityNotFoundException
+import labs.catmarket.repository.projection.ProductDetailsProjection
 import org.springframework.stereotype.Repository
 import java.util.UUID
 
@@ -57,4 +58,9 @@ class ProductRepositoryImpl(
     override fun deleteAll() {
         productJpaRepository.deleteAll()
     }
+
+    override fun findProjectionByName(name: String): ProductDetailsProjection?{
+        return productJpaRepository.findByName(name).orElse(null)
+    }
+
 }
