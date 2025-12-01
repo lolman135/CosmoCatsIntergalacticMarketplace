@@ -4,7 +4,9 @@ import jakarta.servlet.http.HttpServletRequest
 import labs.catmarket.application.exception.CartNotFoundException
 import labs.catmarket.application.exception.DomainAlreadyExistsException
 import labs.catmarket.application.exception.DomainNotFoundException
+import labs.catmarket.application.exception.ProjectionNotFoundException
 import labs.catmarket.featuretoggle.exception.FeatureToggleNotEnabledException
+import labs.catmarket.repository.exception.JpaEntityNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -25,6 +27,26 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(DomainNotFoundException::class)
     fun handleDomainNotFoundException(ex: DomainNotFoundException, request: HttpServletRequest): ProblemDetail {
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message)
+        problem.title = "Not Found"
+        problem.type = URI.create("https://example.com/errors/not-found")
+        problem.instance = URI.create(request.requestURI)
+        log.warn(ex.message)
+        return problem
+    }
+
+    @ExceptionHandler(JpaEntityNotFoundException::class)
+    fun handleJpaEntityNotFoundException(ex: JpaEntityNotFoundException, request: HttpServletRequest): ProblemDetail {
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message)
+        problem.title = "Not Found"
+        problem.type = URI.create("https://example.com/errors/not-found")
+        problem.instance = URI.create(request.requestURI)
+        log.warn(ex.message)
+        return problem
+    }
+
+    @ExceptionHandler(ProjectionNotFoundException::class)
+    fun handleProjectionNotFoundException(ex: ProjectionNotFoundException, request: HttpServletRequest): ProblemDetail {
         val problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.message)
         problem.title = "Not Found"
         problem.type = URI.create("https://example.com/errors/not-found")

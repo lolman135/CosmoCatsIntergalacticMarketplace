@@ -6,8 +6,8 @@ import labs.catmarket.application.useCase.order.CreateOrderUseCase
 import labs.catmarket.common.CartStorage
 import labs.catmarket.domain.Cart
 import labs.catmarket.domain.Product
-import labs.catmarket.repository.order.OrderRepository
-import labs.catmarket.repository.product.ProductRepository
+import labs.catmarket.repository.domainImpl.order.OrderRepository
+import labs.catmarket.repository.domainImpl.product.ProductRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -59,12 +59,11 @@ class CreateOrderUseCaseTest {
         val saved = useCase.execute(userId)
 
         assertNotNull(saved.id)
-        assertEquals(1, saved.orderItems.size)
-        val item = saved.orderItems[0]
+        assertEquals(1, saved.ordersItems.size)
+        val item = saved.ordersItems[0]
         assertEquals(productId, item.productId)
         assertEquals(2, item.quantity)
         assertEquals(product.price, item.pricePerUnit)
-        assertEquals(product.name, item.productName)
 
         verify(cart).clear()
         verify(orderRepository).save(any())

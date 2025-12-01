@@ -20,4 +20,8 @@ class CartStorage {
     fun upsert(cart: Cart) {
         carts[cart.userId] = cart
     }
+
+    fun clearAll() {
+        carts.clear()
+    }
 }

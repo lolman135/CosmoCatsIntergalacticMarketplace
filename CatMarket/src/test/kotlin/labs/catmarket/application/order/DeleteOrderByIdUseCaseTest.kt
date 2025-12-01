@@ -1,7 +1,7 @@
 package labs.catmarket.application.order
 
 import labs.catmarket.application.useCase.order.DeleteOrderByIdUseCase
-import labs.catmarket.repository.order.OrderRepository
+import labs.catmarket.repository.domainImpl.order.OrderRepository
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

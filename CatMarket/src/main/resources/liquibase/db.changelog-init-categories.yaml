@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: lab3
+      author: kyrylo kusovskyi
+      changes:
+        - createTable:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: business_id
+                  type: UUID
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(40)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+        - createSequence:
+            sequenceName: category_id_seq
+            incrementBy: 50

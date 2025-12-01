@@ -4,8 +4,8 @@ import labs.catmarket.application.exception.DomainAlreadyExistsException
 import labs.catmarket.application.useCase.product.CreateProductUseCase
 import labs.catmarket.application.useCase.product.UpsertProductCommand
 import labs.catmarket.domain.Product
-import labs.catmarket.repository.category.CategoryRepository
-import labs.catmarket.repository.product.ProductRepository
+import labs.catmarket.repository.domainImpl.category.CategoryRepository
+import labs.catmarket.repository.domainImpl.product.ProductRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

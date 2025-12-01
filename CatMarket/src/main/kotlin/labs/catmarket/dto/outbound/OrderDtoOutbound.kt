@@ -6,6 +6,5 @@ import java.util.UUID
 data class OrderDtoOutbound(
     val id: UUID,
     val creationTime: LocalDateTime,
-    val totalCost: Int,
     val items: List<OrderItemDtoOutbound>
 )

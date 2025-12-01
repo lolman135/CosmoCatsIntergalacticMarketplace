@@ -9,11 +9,11 @@ import java.util.UUID
 data class ProductDtoInbound(
 
     @field:NotBlank(message = "Product name must not be blank")
-    @field:Size(max = 100, message = "Product name must be at most 100 characters")
+    @field:Size(max = 40, message = "Product name must be at most 40 characters")
     val name: String,
 
     @field:NotBlank(message = "Product description must not be blank")
-    @field:Size(max = 300, message = "Product description must be at most 300 characters")
+    @field:Size(max = 1000, message = "Product description must be at most 1000 characters")
     val description: String,
 
     @field:Min(value = 1, message = "Price must be greater than 0")

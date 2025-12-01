@@ -1,7 +1,7 @@
-package labs.catmarket.repository.category
+package labs.catmarket.repository.domainImpl.category
 
 import labs.catmarket.domain.Category
-import labs.catmarket.repository.BaseRepository
+import labs.catmarket.repository.domainImpl.BaseRepository
 import java.util.UUID
 
 interface CategoryRepository : BaseRepository<UUID, Category> {

@@ -6,6 +6,7 @@ import labs.catmarket.application.useCase.order.GetAllOrdersUseCase
 import labs.catmarket.application.useCase.order.GetOrderByIdUseCase
 import labs.catmarket.dto.outbound.OrderDtoOutbound
 import labs.catmarket.mapper.OrderMapper
+import labs.catmarket.mapper.OrderMapperHelper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -23,7 +24,8 @@ class OrderController(
     private val getAllOrdersUseCase: GetAllOrdersUseCase,
     private val getOrderByIdUseCase: GetOrderByIdUseCase,
     private val deleteOrderByIdUseCase: DeleteOrderByIdUseCase,
-    private val orderMapper: OrderMapper
+    private val orderMapper: OrderMapper,
+    private val orderMapperHelper: OrderMapperHelper
 ) {
 
     //Little bit about POST endpoint. To create an order, we need to get a cart by id of user.
@@ -36,16 +38,17 @@ class OrderController(
         val mockUserId = UUID.fromString("d2dc6423-6d5f-46c7-9781-7f2fa2fc1bb9")
         val order = createOrderUseCase.execute(mockUserId)
         val location = URI.create("/api/v1/orders/${order.id}")
-        return ResponseEntity.created(location).body(orderMapper.toDto(order))
+        return ResponseEntity.created(location).body(orderMapper.toDto(order, orderMapperHelper))
     }
 
     @GetMapping
     fun getAllOrders() = ResponseEntity.ok(getAllOrdersUseCase.execute(Unit).map {
-        orderMapper.toDto(it)
+        orderMapper.toDto(it, orderMapperHelper)
     })
 
     @GetMapping("/{id}")
-    fun getOrderById(@PathVariable id: UUID) = ResponseEntity.ok(orderMapper.toDto(getOrderByIdUseCase.execute(id)))
+    fun getOrderById(@PathVariable id: UUID) =
+        ResponseEntity.ok(orderMapper.toDto(getOrderByIdUseCase.execute(id), orderMapperHelper))
 
     @DeleteMapping("/{id}")
     fun deleteOrderById(@PathVariable id: UUID): ResponseEntity<Void> {
