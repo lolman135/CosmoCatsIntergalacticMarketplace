@@ -1,0 +1,4 @@
+application:
+  feature:
+    toggles:
+      cosmo-cats: false
