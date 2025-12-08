@@ -2,7 +2,7 @@ package labs.catmarket.application.product
 
 import labs.catmarket.application.useCase.product.GetAllProductsUseCase
 import labs.catmarket.domain.Product
-import labs.catmarket.repository.product.ProductRepository
+import labs.catmarket.repository.domainImpl.product.ProductRepository
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
