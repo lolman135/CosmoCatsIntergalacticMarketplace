@@ -9,6 +9,7 @@ import labs.catmarket.common.CartStorage
 import labs.catmarket.domain.Order
 import labs.catmarket.repository.domainImpl.order.OrderRepository
 import labs.catmarket.repository.domainImpl.product.ProductRepository
+import org.springframework.security.access.prepost.PreAuthorize
 import java.util.UUID
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
@@ -22,6 +23,7 @@ class CreateOrderUseCase(
 ) : UseCase<UUID, Order> {
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
+    @PreAuthorize("hasRole('USER')")
     override fun execute(userId: UUID): Order {
         val cart = cartStorage.findByUserId(userId) ?: throw CartNotFoundException()
 
