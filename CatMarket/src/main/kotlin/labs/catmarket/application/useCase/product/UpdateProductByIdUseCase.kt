@@ -2,12 +2,14 @@ package labs.catmarket.application.useCase.product
 
 import labs.catmarket.application.useCase.UseCase
 import labs.catmarket.domain.Product
-import labs.catmarket.repository.product.ProductRepository
+import labs.catmarket.repository.domainImpl.product.ProductRepository
 import labs.catmarket.application.exception.DomainAlreadyExistsException
 import labs.catmarket.application.exception.DomainNotFoundException
-import labs.catmarket.repository.category.CategoryRepository
+import labs.catmarket.repository.domainImpl.category.CategoryRepository
 import java.util.UUID
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Isolation
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UpdateProductByIdUseCase(
@@ -15,6 +17,7 @@ class UpdateProductByIdUseCase(
     private val categoryRepository: CategoryRepository
 ) : UseCase<Pair<UUID, UpsertProductCommand>, Product>{
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     override fun execute(command: Pair<UUID, UpsertProductCommand>): Product {
         val (id, executingCommand) = command
 

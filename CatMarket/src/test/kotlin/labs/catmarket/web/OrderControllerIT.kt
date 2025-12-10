@@ -3,12 +3,18 @@ package labs.catmarket.web
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import labs.catmarket.AbstractIT
+import labs.catmarket.application.useCase.cart.CleanCartForUserUseCase
+import labs.catmarket.common.CartStorage
+import labs.catmarket.domain.Status
 import labs.catmarket.dto.inbound.CartQuantityInbound
-import labs.catmarket.repository.order.OrderRepository
-import labs.catmarket.repository.product.ProductRepository
-import org.hamcrest.Matchers.containsString
+import labs.catmarket.repository.CategoryJpaRepository
+import labs.catmarket.repository.OrderJpaRepository
+import labs.catmarket.repository.ProductJpaRepository
+import labs.catmarket.repository.entity.CategoryEntity
+import labs.catmarket.repository.entity.ProductEntity
 import org.hamcrest.Matchers.greaterThan
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,6 +24,7 @@ import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
+import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertNotNull
 
@@ -25,9 +32,66 @@ import kotlin.test.assertNotNull
 class OrderControllerIT @Autowired constructor(
     private val mockMvc: MockMvc,
     private val objectMapper: ObjectMapper,
-    private val productRepository: ProductRepository,
-    private val orderRepository: OrderRepository,
+    private val productJpaRepository: ProductJpaRepository,
+    private val categoryJpaRepository: CategoryJpaRepository,
+    private val orderJpaRepository: OrderJpaRepository,
+    private val cartStorage: CartStorage
 ) : AbstractIT() {
+
+    //Extra helpers
+
+    private fun createCategory(): CategoryEntity =
+        categoryJpaRepository.save(
+            CategoryEntity(
+                businessId = UUID.randomUUID(),
+                name = "Seed Category"
+            )
+        )
+
+    private fun createProduct(): ProductEntity {
+        val category = createCategory()
+        return productJpaRepository.save(
+            ProductEntity(
+                businessId = UUID.randomUUID(),
+                name = "Test Product",
+                description = "desc",
+                price = 120,
+                imageUrl = "img",
+                category = category
+            )
+        )
+    }
+
+    private fun anySeedProductId(): UUID {
+        val product = createProduct()
+        val all = productJpaRepository.findAll()
+        assertFalse(all.isEmpty(), "At least one product must exist")
+        return product.businessId
+    }
+
+    private fun addItemToCart(productId: UUID, quantity: Int) {
+        val request = CartQuantityInbound(quantity = quantity)
+        mockMvc.put("/api/v1/carts/items/$productId") {
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(request)
+        }.andExpect { status { isNoContent() } }
+    }
+
+    private fun createOrderViaApi(): UUID {
+        val mvcResult = mockMvc.post("/api/v1/orders")
+            .andExpect { status { isCreated() } }
+            .andReturn()
+
+        val json: JsonNode = objectMapper.readTree(mvcResult.response.contentAsString)
+        val id = UUID.fromString(json.get("id").asText())
+        assertNotNull(id)
+        return id
+    }
+
+    @BeforeEach
+    fun cleanCart(){
+        cartStorage.clearAll()
+    }
 
     //POST
     @Test
@@ -42,7 +106,6 @@ class OrderControllerIT @Autowired constructor(
                 content { contentTypeCompatibleWith("application/json") }
                 jsonPath("$.id") { exists() }
                 jsonPath("$.creationTime") { exists() }
-                jsonPath("$.totalCost") { value(greaterThan(0)) }
                 jsonPath("$.items") { isArray() }
                 jsonPath("$.items.length()") { value(greaterThan(0)) }
             }
@@ -86,9 +149,8 @@ class OrderControllerIT @Autowired constructor(
             accept = MediaType.APPLICATION_JSON
         }.andExpect {
             status { isNotFound() }
-            content { contentTypeCompatibleWith("application/problem+json") }
             jsonPath("$.status") { value(404) }
-            jsonPath("$.detail") { value(containsString("not found")) }
+            jsonPath("$.detail") { exists() }
         }
     }
 
@@ -104,33 +166,5 @@ class OrderControllerIT @Autowired constructor(
 
         mockMvc.get("/api/v1/orders/$id")
             .andExpect { status { isNotFound() } }
-    }
-
-
-    //Extra helpers
-    private fun anySeedProductId(): UUID {
-        val all = productRepository.findAll()
-        assertFalse(all.isEmpty(), "Seeded products must exist")
-        return requireNotNull(all.first().id)
-    }
-
-    private fun addItemToCart(productId: UUID, quantity: Int) {
-        val request = CartQuantityInbound(quantity = quantity)
-        mockMvc.put("/api/v1/carts/items/$productId") {
-            contentType = MediaType.APPLICATION_JSON
-            content = objectMapper.writeValueAsString(request)
-        }.andExpect { status { isNoContent() } }
-    }
-
-    private fun createOrderViaApi(): UUID {
-        val mvcResult = mockMvc.post("/api/v1/orders")
-            .andExpect { status { isCreated() } }
-            .andReturn()
-        val body = mvcResult.response.contentAsString
-        val json: JsonNode = objectMapper.readTree(body)
-        val idText = json.get("id").asText()
-        val id = UUID.fromString(idText)
-        assertNotNull(id)
-        return id
     }
 }

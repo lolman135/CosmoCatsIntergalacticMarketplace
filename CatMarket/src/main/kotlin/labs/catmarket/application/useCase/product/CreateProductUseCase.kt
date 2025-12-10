@@ -2,11 +2,13 @@ package labs.catmarket.application.useCase.product
 
 import labs.catmarket.application.exception.DomainAlreadyExistsException
 import labs.catmarket.application.useCase.UseCase
-import labs.catmarket.repository.category.CategoryRepository
+import labs.catmarket.repository.domainImpl.category.CategoryRepository
 import labs.catmarket.domain.Product
-import labs.catmarket.repository.product.ProductRepository
+import labs.catmarket.repository.domainImpl.product.ProductRepository
 import java.util.*
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Isolation
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class CreateProductUseCase(
@@ -14,6 +16,7 @@ class CreateProductUseCase(
     private val categoryRepository: CategoryRepository
 ) : UseCase<UpsertProductCommand, Product> {
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     override fun execute(command: UpsertProductCommand): Product {
         if (productRepository.existsByName(command.name))
             throw DomainAlreadyExistsException("product")
