@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
@@ -32,6 +33,7 @@ class CategoryControllerIT @Autowired constructor(
 
     //POST
     @Test
+    @WithMockUser
     fun saveShouldReturnCreated() {
         val inbound = CategoryDtoInbound(name = "Rocket Vegetables")
 
@@ -47,6 +49,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun saveShouldReturnBadRequestWhenNameBlank() {
         val inbound = CategoryDtoInbound(name = "   ")
 
@@ -62,6 +65,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun saveShouldReturnBadRequestWhenNameTooLong() {
         val inbound = CategoryDtoInbound(name = "a".repeat(101))
 
@@ -78,6 +82,7 @@ class CategoryControllerIT @Autowired constructor(
 
     //GET
     @Test
+    @WithMockUser
     fun getAllShouldReturnOkAndList() {
         categoryRepository.save(Category(id = UUID.randomUUID(), name = "One"))
         categoryRepository.save(Category(id = UUID.randomUUID(), name = "Two"))
@@ -93,6 +98,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun getByIdShouldReturnOkWhenExists() {
         val existedId = getExistsCategoryId()
 
@@ -107,6 +113,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun getByIdShouldReturnNotFoundWhenMissing() {
         val missingId = UUID.randomUUID()
 
@@ -122,6 +129,7 @@ class CategoryControllerIT @Autowired constructor(
 
     //PUT
     @Test
+    @WithMockUser
     fun updateShouldReturnOk() {
         val existedId = getExistsCategoryId()
 
@@ -139,6 +147,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun updateShouldReturnBadRequestWhenBodyInvalid() {
         val invalid = CategoryDtoInbound(name = "")
 
@@ -154,6 +163,7 @@ class CategoryControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun updateShouldReturnBadRequestWhenNameToLong() {
         val invalid = CategoryDtoInbound(name = "a".repeat(101))
 
@@ -170,6 +180,7 @@ class CategoryControllerIT @Autowired constructor(
 
     //DELETE
     @Test
+    @WithMockUser
     fun deleteShouldReturnNoContentWhenExists() {
         val existedId = getExistsCategoryId()
 

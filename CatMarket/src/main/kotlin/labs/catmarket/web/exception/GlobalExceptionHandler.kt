@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ProblemDetail
 import org.springframework.http.ResponseEntity
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -71,6 +72,18 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         problem.title = "Not Found"
         problem.type = URI.create("https://example.com/errors/not-found")
         problem.instance = URI.create(request.requestURI)
+        log.warn(ex.message)
+        return problem
+    }
+
+    @ExceptionHandler(OAuth2AuthenticationException::class)
+    fun handleOAuth2AuthenticationException(ex: OAuth2AuthenticationException, request: HttpServletRequest): ProblemDetail {
+        val error = ex.error
+        val problem = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.message)
+        problem.title = "Not Found"
+        problem.type = URI.create("https://example.com/errors/not-found")
+        problem.instance = URI.create(request.requestURI)
+        problem.setProperty("error", error)
         log.warn(ex.message)
         return problem
     }

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
@@ -60,6 +61,7 @@ class CartControllerIT @Autowired constructor(
 
     //POST
     @Test
+    @WithMockUser
     fun addProductToCartShouldReturnsNoContent() {
         val productId = anySeedProductId()
         val request = CartQuantityInbound(quantity = 1)
@@ -73,6 +75,7 @@ class CartControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun addProductToCartShouldReturnsBadRequest() {
         val productId = anySeedProductId()
         val request = CartQuantityInbound(quantity = 0)
@@ -90,6 +93,7 @@ class CartControllerIT @Autowired constructor(
 
     //GET
     @Test
+    @WithMockUser
     fun getCartForUserShouldReturnOkafterAddingItem() {
         val productId = anySeedProductId()
         val request = CartQuantityInbound(quantity = 2)
@@ -110,6 +114,7 @@ class CartControllerIT @Autowired constructor(
 
     //DELETE
     @Test
+    @WithMockUser
     fun cleanCartForUserShouldreturnsNoContenThenOk() {
         val productId = anySeedProductId()
         val request = CartQuantityInbound(quantity = 1)

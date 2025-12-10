@@ -1,19 +1,24 @@
 package labs.catmarket
 
 
+import labs.catmarket.common.WireMockContainer
+import labs.catmarket.config.MockOAuthConfiguration
 import labs.catmarket.utils.DbCleaner
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.springframework.transaction.annotation.Transactional
 import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.junit.jupiter.Container
 
 
 @SpringBootTest
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc
+@Import(MockOAuthConfiguration::class)
 abstract class AbstractIT{
 
     @Autowired
@@ -30,6 +35,11 @@ abstract class AbstractIT{
         }
 
         @JvmStatic
+        val container = WireMockContainer().apply {
+            start() // Start it manually before Spring context initialization
+        }
+
+        @JvmStatic
         @DynamicPropertySource
         fun registerProperties(registry: DynamicPropertyRegistry) {
             registry.add("spring.datasource.url") { postgres.jdbcUrl }
@@ -37,8 +47,8 @@ abstract class AbstractIT{
             registry.add("spring.datasource.password") { postgres.password }
             registry.add("spring.jpa.hibernate.ddl-auto") { "validate" }
             registry.add("spring.jpa.hibernate.ddl-auto") { "none" }
+            registry.add("github.user-info-uri") { "${container.baseUrl()}/user" }
         }
-
 
     }
 

@@ -8,6 +8,7 @@ import labs.catmarket.featuretoggle.FeatureToggles
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import kotlin.test.Test
@@ -21,6 +22,7 @@ class CosmoCatsControllerIT @Autowired constructor(
 
     @Test
     @EnableFeatureToggle(FeatureToggles.COSMO_CATS)
+    @WithMockUser
     fun shouldReturnOKStatus() {
         mockMvc.get("/api/v1/cosmo-cats").andExpect {
             status { isOk() }
@@ -29,6 +31,7 @@ class CosmoCatsControllerIT @Autowired constructor(
 
     @Test
     @DisableFeatureToggle(FeatureToggles.COSMO_CATS)
+    @WithMockUser
     fun shouldReturnNotFoundStatus() {
         mockMvc.get("/api/v1/cosmo-cats").andExpect {
             status { isNotFound() }
