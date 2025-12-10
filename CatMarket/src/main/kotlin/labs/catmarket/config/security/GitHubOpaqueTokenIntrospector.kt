@@ -1,5 +1,6 @@
 package labs.catmarket.config.security
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -19,7 +20,10 @@ import kotlin.apply
 // ask GitHub, is this token is valid. If yes, it gets info about user for whom this token was generated and then,
 // Spring security allows to make a request. If token is not walid, GitHub Api Returns 401, and spring catch it and
 // declines user request with 401 error.
-class GitHubOpaqueTokenIntrospector : OpaqueTokenIntrospector {
+class GitHubOpaqueTokenIntrospector(
+    @Value("\${github.user-info-uri:https://api.github.com/user}")
+    private val userInfoUri: String
+) : OpaqueTokenIntrospector {
 
     override fun introspect(token: String): OAuth2AuthenticatedPrincipal {
         val headers = HttpHeaders().apply {
@@ -31,7 +35,7 @@ class GitHubOpaqueTokenIntrospector : OpaqueTokenIntrospector {
         val request = HttpEntity<Void>(headers)
 
         val response = RestTemplate().exchange(
-            "https://api.github.com/user",
+            userInfoUri,
             HttpMethod.GET,
             request,
             Map::class.java

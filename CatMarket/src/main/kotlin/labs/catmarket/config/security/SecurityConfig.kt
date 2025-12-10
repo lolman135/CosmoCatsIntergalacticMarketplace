@@ -1,5 +1,6 @@
 package labs.catmarket.config.security
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -14,10 +15,16 @@ import org.springframework.security.web.SecurityFilterChain
 class SecurityConfig {
 
     @Bean
-    fun githubIntrospector() = GitHubOpaqueTokenIntrospector()
+    fun githubIntrospector(
+        @Value("\${github.user-info-uri:https://api.github.com/user}")
+        userInfoUri: String
+    ) = GitHubOpaqueTokenIntrospector(userInfoUri)
 
     @Bean
-    fun securityFilterChain(http: HttpSecurity) : SecurityFilterChain{
+    fun securityFilterChain(
+        http: HttpSecurity,
+        githubIntrospector: GitHubOpaqueTokenIntrospector
+    ) : SecurityFilterChain{
 
         http{
             csrf { disable() }
@@ -31,7 +38,7 @@ class SecurityConfig {
             }
 
             oauth2ResourceServer {
-                opaqueToken { introspector = githubIntrospector() }
+                opaqueToken { introspector = githubIntrospector }
             }
 
             logout {

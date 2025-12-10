@@ -70,6 +70,8 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.wiremock:wiremock-standalone:3.0.0")
+    testImplementation("org.testcontainers:testcontainers")
     runtimeOnly("org.postgresql:postgresql")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
