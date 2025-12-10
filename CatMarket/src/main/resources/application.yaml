@@ -47,6 +47,12 @@ spring:
             user-info-uri: https://api.github.com/user
             user-name-attribute: id
 
+      resourceserver:
+        opaquetoken:
+          introspection-uri: https://api.github.com/user
+          client-id: Ov23lirSNkFQXPZxI8Yj
+          client-secret: a9811c09a19740919ae57967e8b802168e70addd
+
 springdoc:
   api-docs:
     enabled: true
@@ -54,8 +60,14 @@ springdoc:
     enabled: true
     url: /openapi/catmarket.yaml
 
-#logging:
-#  level:
-#    org.hibernate.SQL: debug
-#    org.hibernate.type: trace
-#    org.springframework.orm.jpa: debug
+logging:
+  level:
+    spring: debug
+
+    org.springframework.security: debug
+    org.springframework.security.web: debug
+    org.springframework.security.oauth2: debug
+
+    org.springframework.web: debug
+    org.springframework.web.client: trace
+    org.springframework.web.filter: trace

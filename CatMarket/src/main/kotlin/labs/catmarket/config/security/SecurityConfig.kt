@@ -12,6 +12,8 @@ import java.beans.BeanProperty
 @EnableWebSecurity
 class SecurityConfig {
 
+    @Bean
+    fun githubIntrospector() = GitHubOpaqueTokenIntrospector()
 
     @Bean
     fun securityFilterChain(http: HttpSecurity) : SecurityFilterChain{
@@ -22,9 +24,15 @@ class SecurityConfig {
             authorizeHttpRequests {
                 authorize(anyRequest, authenticated)
             }
+
             oauth2Login {
                 loginPage = "/oauth2/authorization/github"
             }
+
+            oauth2ResourceServer {
+                opaqueToken { introspector = githubIntrospector() }
+            }
+
             logout {
                 logoutSuccessUrl = "/"
             }
