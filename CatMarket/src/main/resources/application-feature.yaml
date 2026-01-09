@@ -1,4 +1,4 @@
 application:
   feature:
     toggles:
-      cosmo-cats: false
+      cosmo-cats: true

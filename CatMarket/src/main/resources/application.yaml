@@ -4,6 +4,8 @@ spring:
   docker:
     compose:
       enabled: false
+  profiles:
+    active: feature
 
   datasource:
     url: jdbc:postgresql://localhost:5432/catmarket_db
