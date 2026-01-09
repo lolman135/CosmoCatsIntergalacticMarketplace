@@ -19,6 +19,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
@@ -95,6 +96,7 @@ class OrderControllerIT @Autowired constructor(
 
     //POST
     @Test
+    @WithMockUser
     fun createOrderShouldReturnCreatedWhenCartHasItems() {
         val productId = anySeedProductId()
         addItemToCart(productId, 2)
@@ -113,6 +115,7 @@ class OrderControllerIT @Autowired constructor(
 
     //GET
     @Test
+    @WithMockUser
     fun getAllOrdersShouldReturnOkAndList() {
         val productId = anySeedProductId()
         addItemToCart(productId, 1)
@@ -128,6 +131,7 @@ class OrderControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun getByIdShouldReturnOkWhenExists() {
         val productId = anySeedProductId()
         addItemToCart(productId, 3)
@@ -144,6 +148,7 @@ class OrderControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun getByIdShouldReturnNotFoundWhenMissing() {
         mockMvc.get("/api/v1/orders/${UUID.randomUUID()}") {
             accept = MediaType.APPLICATION_JSON
@@ -156,6 +161,7 @@ class OrderControllerIT @Autowired constructor(
 
     //DELETE
     @Test
+    @WithMockUser
     fun deleteShouldReturnNoContentWhenExists() {
         val productId = anySeedProductId()
         addItemToCart(productId, 1)

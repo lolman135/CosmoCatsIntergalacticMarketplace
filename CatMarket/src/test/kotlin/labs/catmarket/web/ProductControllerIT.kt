@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 import org.springframework.http.MediaType
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
@@ -39,6 +40,7 @@ class ProductControllerIT @Autowired constructor(
 
     //POST
     @Test
+    @WithMockUser
     fun postShouldReturnCreatedWhenValid() {
         val categoryId = seedCategory("Veggies")
         val inbound = validProduct(categoryId)
@@ -59,6 +61,7 @@ class ProductControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun postShouldReturnBadRequestWhenNameBlank() {
         val categoryId = seedCategory("Veggies")
         val invalid = ProductDtoInbound(
@@ -81,6 +84,7 @@ class ProductControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun postShouldReturnBadRequestWhenPriceTooLow() {
         val categoryId = seedCategory("Veggies")
         val invalid = ProductDtoInbound(
@@ -105,6 +109,7 @@ class ProductControllerIT @Autowired constructor(
     // GET
 
     @Test
+    @WithMockUser
     fun getAllShouldReturnOkAndList() {
         val categoryId = seedCategory("Veggies")
         createProductViaApi(validProduct(categoryId))
@@ -121,6 +126,7 @@ class ProductControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun getByIdShouldReturnOkWhenExists() {
         val categoryId = seedCategory("Veggies")
         val id = createProductViaApi(validProduct(categoryId))
@@ -135,6 +141,7 @@ class ProductControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun getByIdShouldReturnNotFoundWhenMissing() {
         mockMvc.get("/api/v1/products/${UUID.randomUUID()}") {
             accept = MediaType.APPLICATION_JSON
@@ -149,6 +156,7 @@ class ProductControllerIT @Autowired constructor(
     // PUT
 
     @Test
+    @WithMockUser
     fun putShouldReturnOkWhenValid() {
         val categoryId = seedCategory("Veggies")
         val id = createProductViaApi(validProduct(categoryId))
@@ -177,6 +185,7 @@ class ProductControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun putShouldReturnBadRequestWhenNameTooLong() {
         val categoryId = seedCategory("Veggies")
         val id = createProductViaApi(validProduct(categoryId))
@@ -201,6 +210,7 @@ class ProductControllerIT @Autowired constructor(
     }
 
     @Test
+    @WithMockUser
     fun putShouldReturnBadRequestWhenImageUrlInvalid() {
         val categoryId = seedCategory("Veggies")
         val id = createProductViaApi(validProduct(categoryId))
@@ -227,6 +237,7 @@ class ProductControllerIT @Autowired constructor(
     // DELETE
 
     @Test
+    @WithMockUser
     fun deleteShouldReturnNoContentWhenExists() {
         val categoryId = seedCategory("Veggies")
         val id = createProductViaApi(validProduct(categoryId))
