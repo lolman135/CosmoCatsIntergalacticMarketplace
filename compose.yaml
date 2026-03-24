@@ -5,4 +5,21 @@ services:
     container_name: catmarket-api
     ports:
       - '8080:8080'
+    environment:
+      - DB_URL=jdbc:postgresql://postgres:5432/catmarket_db
+      - DB_USER=admin
+      - DB_PASSWORD=AdminAdmin
+    restart: always
+
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    environment:
+      POSTGRES_DB: catmarket_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: AdminAdmin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
     restart: always
