@@ -10,7 +10,7 @@ A RESTful order management service for a cat-themed marketplace, built with Kotl
 |---|---|
 | Language | Kotlin (targeting Java 21) |
 | Framework | Spring Boot |
-| Persistence | Spring Data JPA, Liquibase |
+| Persistence | PostgreSQL, Spring Data JPA, Liquibase |
 | Authentication | OAuth2, GitHub OAuth |
 | Containerization | Docker, Docker Compose |
 | Testing | JUnit, Mockito-Kotlin, Testcontainers |
@@ -25,8 +25,10 @@ The project is structured around **Clean Architecture** with **DDD** tactical pa
 
 - **Domain layer** — entities, value objects, domain events, repository interfaces
 - **Application layer** — use cases, application services
-- **Infrastructure layer** — JPA repositories, external integrations, persistence models
-- **Interface layer** — REST controllers, DTOs, request/response mapping
+- **Infrastructure layer** — JPA repositories, external integrations, persistence and data mapping
+<br> • **Note**: Infrastructure layer divided for persistence, mappers and feature toggles
+- **Web layer** — REST controllers, requests validation
+
 
 ---
 
